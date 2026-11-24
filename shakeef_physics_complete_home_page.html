@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shakeef Physics | Next-Gen A/L Physics Learning Platform</title>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Boxicons for modern crisp icons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* ================= 1. THEME VARIABLES (LIGHT & BALANCED DARK MODE) ================= */
+    :root {
+      --primary: #10b981;          /* Fresh Emerald Light Green */
+      --primary-dark: #059669;
+      --primary-soft: #ecfdf5;
+      --primary-border: #a7f3d0;
+
+      --bg-main: #ffffff;
+      --bg-alt: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.08);
+      --nav-bg: rgba(255, 255, 255, 0.92);
+    }
+
+    [data-theme="dark"] {
+      --primary: #34d399;          /* Soft Glowing Mint Green */
+      --primary-dark: #10b981;
+      --primary-soft: rgba(16, 185, 129, 0.14);
+      --primary-border: rgba(52, 211, 153, 0.32);
+
+      --bg-main: #111827;          /* Balanced Slate Dark (Easy on eyes, not pitch black) */
+      --bg-alt: #182132;
+      --bg-card: #1f2937;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.38);
+      --nav-bg: rgba(17, 24, 39, 0.92);
+    }
+
+    /* ================= 2. GLOBAL RESET & BASE ================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .bg-alt {
+      background-color: var(--bg-alt);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ================= 3. BUTTONS ================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .btn-primary {
+      color: #064e3b;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.32);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .btn-lg {
+      padding: 13px 26px;
+      font-size: 1rem;
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 0.85rem;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* ================= 4. NAVBAR & 3-BAR RESPONSIVE MENU ================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.65rem;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+    }
+
+    .brand-tag {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    .nav-link {
+      font-weight: 600;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-badge {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-border);
+      color: var(--primary-dark);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    [data-theme="dark"] .user-badge {
+      color: var(--primary);
+    }
+
+    .nav-mobile-actions {
+      display: none;
+    }
+
+    /* 3-Bar Hamburger Button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .hamburger .bar {
+      height: 3px;
+      width: 100%;
+      background-color: var(--text-main);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+      transform: translateY(8.5px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+      transform: translateY(-8.5px) rotate(-45deg);
+    }
+
+    /* ================= 5. HERO & INSTRUCTOR PROFILE CARD ================= */
+    .hero {
+      padding: 65px 0 80px;
+      background: radial-gradient(circle at top right, var(--primary-soft), transparent 58%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-border);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    [data-theme="dark"] .badge-pill {
+      color: var(--primary);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .hero-content h1 {
+      font-size: 2.95rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .text-gradient {
+      color: var(--primary);
+    }
+
+    .hero-sub {
+      font-size: 1.06rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 580px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .stat-item h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--border-color);
+    }
+
+    /* Instructor Profile Card */
+    .instructor-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .instructor-img-box {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      height: 270px;
+      margin-bottom: 18px;
+      background: var(--primary-soft);
+    }
+
+    .instructor-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .verified-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #34d399;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .instructor-info h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .instructor-info .qual {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .instructor-info .bio {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .instructor-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .instructor-tags span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      padding: 5px 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    [data-theme="dark"] .instructor-tags span {
+      color: var(--primary);
+    }
+
+    /* ================= 6. SECTION HEADERS ================= */
+    .section-header.center {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 45px;
+    }
+
+    .section-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+      gap: 20px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 2.05rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* ================= 7. LANDSCAPE COURSE SLIDER ================= */
+    .slider-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .slider-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .slider-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .course-slider {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 16px;
+    }
+
+    .course-slider::-webkit-scrollbar {
+      height: 6px;
+    }
+    .course-slider::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .course-card {
+      min-width: 345px;
+      max-width: 345px;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .course-banner {
+      position: relative;
+      height: 185px;
+      background: var(--primary-soft);
+    }
+
+    .course-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .course-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .course-badge.live {
+      background: #ef4444;
+    }
+
+    .course-badge.hot {
+      background: var(--primary-dark);
+    }
+
+    .course-price {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: var(--bg-card);
+      color: var(--primary-dark);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    [data-theme="dark"] .course-price {
+      color: var(--primary);
+    }
+
+    .course-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .course-body h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .course-body p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    /* ================= 8. SMART MASKED VIDEO PLAYER ================= */
+    .smart-player-layout {
+      display: grid;
+      grid-template-columns: 1.45fr 0.85fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .custom-video-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0b1120;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 2px solid var(--border-color);
+      user-select: none;
+    }
+
+    /* Masks top & bottom YouTube UI chrome so viewers stay inside Shakeef Physics player */
+    .custom-video-container iframe {
+      position: absolute;
+      top: -62px;
+      left: 0;
+      width: 100%;
+      height: calc(100% + 124px);
+      pointer-events: none;
+    }
+
+    .iframe-shield {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .player-watermark {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      z-index: 3;
+      background: rgba(15, 23, 42, 0.6);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .player-brand-chip {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      z-index: 3;
+      background: rgba(16, 185, 129, 0.9);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.4) 70%, transparent);
+      padding: 22px 16px 12px;
+      color: #fff;
+    }
+
+    .progress-area {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      border-radius: 6px;
+      transition: width 0.1s linear;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .controls-left, .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .custom-controls button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .custom-controls button:hover {
+      color: var(--primary);
+    }
+
+    #aiNoteBtn {
+      font-size: 0.78rem;
+      background: var(--primary);
+      color: #064e3b;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    #speedSelect {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 3px 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    #speedSelect option {
+      color: #0f172a;
+    }
+
+    .time-display {
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Telemetry Bar */
+    .telemetry-bar {
+      margin-top: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .telemetry-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .telemetry-item i {
+      font-size: 1.45rem;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 8px;
+      border-radius: 10px;
+    }
+
+    .telemetry-item strong {
+      display: block;
+      font-size: 0.98rem;
+    }
+
+    .telemetry-item span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* Admin Analytics Drawer */
+    .admin-analytics-panel {
+      margin-top: 14px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .admin-analytics-panel h4 {
+      margin-bottom: 12px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.98rem;
+    }
+
+    .admin-link-loader {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .admin-link-loader input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-alt);
+      color: var(--text-main);
+      font-size: 0.85rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .analytics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    .analytics-table th, .analytics-table td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .badge-success {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+
+    [data-theme="dark"] .badge-success {
+      color: var(--primary);
+    }
+
+    .badge-info {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+
+    /* Playlist Sidebar */
+    .playlist-card, .ai-notes-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .playlist-card h3 {
+      font-size: 1.08rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lesson-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-alt);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lesson-item.active, .lesson-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .lesson-num {
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .lesson-meta {
+      flex: 1;
+    }
+
+    .lesson-meta h4 {
+      font-size: 0.9rem;
+    }
+
+    .lesson-meta span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .ai-notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .ai-tag {
+      font-size: 0.72rem;
+      background: var(--primary-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .ai-notes-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* ================= 9. AI & PHYSICS FEATURES GRID ================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 26px;
+      transition: 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ================= 10. STYLISH STUDENT TESTIMONIALS ================= */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .testimonial-card.featured-review {
+      border: 2px solid var(--primary);
+    }
+
+    .quote-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      opacity: 0.35;
+    }
+
+    .stars {
+      color: #f59e0b;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .student-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .avatar {
+      color: #064e3b;
+    }
+
+    .student-profile h4 {
+      font-size: 0.98rem;
+    }
+
+    .student-profile span {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ================= 11. SOCIAL CHANNELS SHOWCASE ================= */
+    .channels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .channel-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 22px;
+      transition: 0.25s;
+    }
+
+    .channel-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .channel-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      font-size: 1.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .channel-card.yt .channel-icon { background: #fee2e2; color: #ef4444; }
+    .channel-card.tg .channel-icon { background: #e0f2fe; color: #0284c7; }
+    .channel-card.wa .channel-icon { background: #dcfce7; color: #16a34a; }
+    .channel-card.ig .channel-icon { background: #fce7f3; color: #db2777; }
+
+    .channel-info h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .channel-info p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .channel-cta {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ================= 12. ABOUT SECTION ================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-content p {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .about-checklist {
+      list-style: none;
+      margin-top: 18px;
+    }
+
+    .about-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .about-checklist i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .mission-box {
+      background: var(--bg-card);
+      border: 1px solid var(--primary-border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mission-box h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-mini {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* ================= 13. FOOTER ================= */
+    .footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      padding: 50px 0 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-desc {
+      margin-top: 12px;
+      color: var(--text-muted);
+      max-width: 340px;
+      font-size: 0.9rem;
+    }
+
+    .footer h4 {
+      margin-bottom: 12px;
+    }
+
+    .footer ul {
+      list-style: none;
+    }
+
+    .footer ul li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .footer ul li a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ================= 14. FLOATING WHATSAPP & AI CHATBOT ================= */
+    .floating-dock {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 1200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .float-btn {
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+      transition: transform 0.25s ease;
+    }
+
+    .float-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .ai-float {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 18px;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    [data-theme="dark"] .ai-float {
+      color: #064e3b;
+    }
+
+    .wa-float {
+      width: 56px;
+      height: 56px;
+      background: #25d366;
+      color: #fff;
+      font-size: 2rem;
+    }
+
+    /* AI Chatbot Window */
+    .chatbot-window {
+      position: fixed;
+      bottom: 155px;
+      right: 22px;
+      width: 350px;
+      max-width: calc(100vw - 44px);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      z-index: 1300;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chatbot-window.open {
+      display: flex;
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    [data-theme="dark"] .chat-header {
+      color: #064e3b;
+    }
+
+    .chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-title i {
+      font-size: 1.6rem;
+    }
+
+    .chat-title h4 {
+      font-size: 0.95rem;
+    }
+
+    .chat-title span {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .chat-header button {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      height: 250px;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg-alt);
+    }
+
+    .msg {
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      max-width: 85%;
+    }
+
+    .msg.bot {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+    }
+
+    .msg.user {
+      background: var(--primary);
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    [data-theme="dark"] .msg.user {
+      color: #064e3b;
+      font-weight: 600;
+    }
+
+    .chat-suggestions {
+      display: flex;
+      gap: 6px;
+      padding: 8px 12px;
+      overflow-x: auto;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .chat-suggestions button {
+      white-space: nowrap;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--primary-border);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      cursor: pointer;
+    }
+
+    [data-theme="dark"] .chat-suggestions button {
+      color: var(--primary);
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      gap: 8px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-alt);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .chat-input-area button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      width: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    /* ================= 15. MODALS & TOAST NOTIFICATION ================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 28px;
+      width: 100%;
+      max-width: 430px;
+      box-shadow: var(--shadow-md);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-card.modal-lg {
+      max-width: 600px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .auth-tab.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .auth-form h3 {
+      margin-bottom: 4px;
+    }
+
+    .auth-form p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-alt);
+      color: var(--text-main);
+    }
+
+    /* Simulation Canvas */
+    .sim-controls {
+      display: flex;
+      gap: 20px;
+      margin: 14px 0;
+      flex-wrap: wrap;
+    }
+
+    .sim-controls label {
+      flex: 1;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .sim-controls input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    #simCanvas {
+      width: 100%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+
+    .sim-readout {
+      margin-top: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /* Custom Toast Notification (Replaces alert) */
+    .toast-banner {
+      position: fixed;
+      top: 85px;
+      right: 20px;
+      background: var(--bg-card);
+      border-left: 4px solid var(--primary);
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transform: translateX(130%);
+      transition: transform 0.3s ease;
+    }
+
+    .toast-banner.show {
+      transform: translateX(0);
+    }
+
+    /* ================= 16. RESPONSIVE (TABLET & MOBILE) ================= */
+    @media (max-width: 992px) {
+      .hero-grid,
+      .smart-player-layout,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 2.3rem;
+      }
+
+      .desktop-only {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 73px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 73px);
+        background: var(--bg-main);
+        flex-direction: column;
+        padding: 30px 24px;
+        transition: left 0.3s ease;
+        border-top: 1px solid var(--border-color);
+        overflow-y: auto;
+      }
+
+      .nav-menu.active {
+        left: 0;
+      }
+
+      .nav-list {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 28px;
+      }
+
+      .nav-mobile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .course-card {
+        min-width: 290px;
+        max-width: 290px;
+      }
+
+      .hero-stats {
+        gap: 14px;
+      }
+
+      .section {
+        padding: 55px 0;
+      }
+
+      .controls-right {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Notification Toast -->
+  <div class="toast-banner" id="toastBanner">
+    <i class='bx bxs-check-circle' style="color: var(--primary); font-size: 1.3rem;"></i>
+    <span id="toastMessage">Welcome to Shakeef Physics!</span>
+  </div>
+
+  <!-- ================= NAVBAR (3-BAR RESPONSIVE) ================= -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Brand Logo + Name -->
+      <a href="#home" class="brand">
+        <div class="brand-logo">
+          <i class='bx bx-atom'></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Shakeef Physics</span>
+          <span class="brand-tag">A/L Physics Academy</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#courses" class="nav-link">Courses</a></li>
+          <li><a href="#free-class" class="nav-link">Free Smart Class</a></li>
+          <li><a href="#ai-lab" class="nav-link">AI & Simulations</a></li>
+          <li><a href="#testimonials" class="nav-link">Results</a></li>
+          <li><a href="#channels" class="nav-link">Channels</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+        <div class="nav-mobile-actions">
+          <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
+          <button class="btn btn-primary" onclick="openAuthModal('register')">Register</button>
+        </div>
+      </nav>
+
+      <!-- Right Controls: Theme Toggle, Auth Buttons & 3-Bar Hamburger -->
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark/Light Mode" title="Switch Theme">
+          <i class='bx bx-moon' id="themeIcon"></i>
+        </button>
+
+        <div class="user-badge" id="userBadge">
+          <i class='bx bxs-user-circle'></i>
+          <span id="loggedUserName">Student</span>
+        </div>
+
+        <div class="auth-buttons desktop-only" id="desktopAuthBtns">
+          <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
+          <button class="btn btn-primary" onclick="openAuthModal('register')">Register</button>
+        </div>
+
+        <!-- 3-Bar Hamburger Menu -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION & INSTRUCTOR PROFILE CARD ================= -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <!-- Left Content -->
+      <div class="hero-content">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span> 2026 & 2027 A/L Admissions Open
+        </div>
+        <h1>Master A/L Physics with <span class="text-gradient">Concept Clarity</span> & AI Power</h1>
+        <p class="hero-sub">
+          Join Sri Lanka's modern physics learning ecosystem. Structured Theory, Speed Revision, Past Paper Clinics, Interactive Simulations, and 24/7 AI Doubt Solving.
+        </p>
+        <div class="hero-cta">
+          <a href="#courses" class="btn btn-primary btn-lg">
+            Explore Courses <i class='bx bx-right-arrow-alt'></i>
+          </a>
+          <a href="#free-class" class="btn btn-outline btn-lg">
+            <i class='bx bx-play-circle'></i> Watch Free Class
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3>5,000+</h3>
+            <p>Active Students</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3>98%</h3>
+            <p>Pass & 'A' Rate</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3>24/7</h3>
+            <p>AI Physics Tutor</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Your Instructor Profile Card -->
+      <div class="hero-card-wrapper">
+        <div class="instructor-card">
+          <div class="instructor-img-box">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=600&q=80"
+                 onerror="this.src='https://placehold.co/600x400/10b981/ffffff?text=Shakeef+Physics'"
+                 alt="U. M. Shakeef - Physics Educator" />
+            <div class="verified-badge">
+              <i class='bx bxs-badge-check'></i> Lead Educator
+            </div>
+          </div>
+          <div class="instructor-info">
+            <h2>U. M. Shakeef</h2>
+            <p class="qual">B.Sc. (Hons) Software Engineering (UG) | A/L Physics Educator</p>
+            <p class="bio">
+              Simplifying complex A/L Physics concepts through logical visualization, exam-targeted paper discussions, and smart AI-assisted learning tools.
+            </p>
+            <div class="instructor-tags">
+              <span><i class='bx bx-check-circle'></i> Theory & Revision</span>
+              <span><i class='bx bx-check-circle'></i> Paper Masterclass</span>
+              <span><i class='bx bx-check-circle'></i> Smart LMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AVAILABLE COURSES (LANDSCAPE SLIDER) ================= -->
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="section-header-flex">
+        <div>
+          <span class="section-tag">Academic Programs</span>
+          <h2 class="section-title">Available Physics Courses</h2>
+          <p class="section-desc">Swipe or use arrows to explore our structured batches designed for top island ranks.</p>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn" id="slideLeft" aria-label="Scroll Left"><i class='bx bx-chevron-left'></i></button>
+          <button class="slider-btn" id="slideRight" aria-label="Scroll Right"><i class='bx bx-chevron-right'></i></button>
+        </div>
+      </div>
+
+      <!-- Horizontal Landscape Slider -->
+      <div class="course-slider" id="courseSlider">
+        <!-- Course Card 1 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80"
+                 onerror="this.src='https://placehold.co/800x450/10b981/ffffff?text=2027+Theory+Batch'"
+                 alt="2027 Theory Batch">
+            <span class="course-badge live">LIVE + RECORDED</span>
+            <span class="course-price">LKR 2,500 / mo</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-calendar'></i> 2027 A/L Batch</span>
+              <span><i class='bx bx-time-five'></i> Sat 8:00 AM</span>
+            </div>
+            <h3>2027 A/L Complete Physics Theory</h3>
+            <p>Zero-to-Hero full syllabus coverage with tutes, practical discussions, and monthly online exams.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 2 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=800&q=80"
+                 onerror="this.src='https://placehold.co/800x450/059669/ffffff?text=2026+Rapid+Revision'"
+                 alt="2026 Speed Revision">
+            <span class="course-badge hot">POPULAR</span>
+            <span class="course-price">LKR 3,000 / mo</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-calendar'></i> 2026 A/L Batch</span>
+              <span><i class='bx bx-time-five'></i> Sun 8:00 AM</span>
+            </div>
+            <h3>2026 Rapid Revision & Paper Class</h3>
+            <p>Complete syllabus recap in 6 months + 20 years of past papers & model paper timing drills.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 3 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+                 onerror="this.src='https://placehold.co/800x450/10b981/ffffff?text=Mechanics+Mastery'"
+                 alt="Mechanics Mastery">
+            <span class="course-badge">UNIT PACK</span>
+            <span class="course-price">LKR 1,800</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-layer'></i> Unit 02 Special</span>
+              <span><i class='bx bx-video'></i> 24 Lessons</span>
+            </div>
+            <h3>Mechanics & Rotational Motion Special</h3>
+            <p>Deep-dive problem solving for Mechanics with interactive vector & motion simulations.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 4 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
+                 onerror="this.src='https://placehold.co/800x450/059669/ffffff?text=Fields+and+Electronics'"
+                 alt="Electronics & Fields">
+            <span class="course-badge">UNIT PACK</span>
+            <span class="course-price">LKR 2,000</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-chip'></i> Units 05 - 08</span>
+              <span><i class='bx bx-video'></i> 30 Lessons</span>
+            </div>
+            <h3>Electric, Magnetic Fields & Electronics</h3>
+            <p>Crystal clear circuit analysis, op-amps, logic gates, and field theory simplified.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SMART PROTECTED FREE CLASS PLAYER ================= -->
+  <section class="section bg-alt" id="free-class">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Experience Our Teaching</span>
+        <h2 class="section-title">Free Smart Physics Class</h2>
+        <p class="section-desc">Watch our sample lesson in our distraction-free AI Smart Player with real-time MySQL engagement analytics.</p>
+      </div>
+
+      <div class="smart-player-layout">
+        <!-- Custom Masked YouTube Player Box -->
+        <div class="player-wrapper">
+          <div class="custom-video-container" id="customVideoBox" oncontextmenu="return false;">
+            <!-- Brand Chip & Student Anti-Piracy Watermark -->
+            <div class="player-brand-chip"><i class='bx bx-atom'></i> Shakeef Smart Player</div>
+            <div class="player-watermark" id="studentWatermark">ID: GUEST-VIEWER • Shakeef Physics</div>
+
+            <!-- Transparent Shield prevents right-click or clicking through to YouTube -->
+            <div class="iframe-shield" id="iframeShield" title="Click to Play/Pause"></div>
+            <div id="ytPlayer"></div>
+
+            <!-- Custom Branded Controls Overlay -->
+            <div class="custom-controls">
+              <div class="progress-area" id="progressArea">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+              <div class="controls-row">
+                <div class="controls-left">
+                  <button id="playPauseBtn" title="Play/Pause"><i class='bx bx-play'></i></button>
+                  <button id="rewindBtn" title="Rewind 10s"><i class='bx bx-rewind'></i></button>
+                  <button id="forwardBtn" title="Forward 10s"><i class='bx bx-fast-forward'></i></button>
+                  <span class="time-display"><span id="currentTime">00:00</span> / <span id="totalDuration">00:00</span></span>
+                </div>
+                <div class="controls-right">
+                  <select id="speedSelect" title="Playback Speed">
+                    <option value="1">1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                  </select>
+                  <button id="aiNoteBtn" title="AI Smart Summary"><i class='bx bx-bot'></i> AI Notes</button>
+                  <button id="fullscreenBtn" title="Fullscreen"><i class='bx bx-fullscreen'></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lesson Telemetry Bar -->
+          <div class="telemetry-bar">
+            <div class="telemetry-item">
+              <i class='bx bx-show'></i>
+              <div>
+                <strong id="totalViewsCount">1,428</strong>
+                <span>Total Views</span>
+              </div>
+            </div>
+            <div class="telemetry-item">
+              <i class='bx bx-time'></i>
+              <div>
+                <strong id="liveWatchTime">0m 00s</strong>
+                <span>Your Watch Time (MySQL Ready)</span>
+              </div>
+            </div>
+            <div class="telemetry-item">
+              <i class='bx bx-check-shield'></i>
+              <div>
+                <strong id="completionPct">0%</strong>
+                <span>Lesson Progress</span>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="toggleAdminAnalytics()">
+              <i class='bx bx-bar-chart-alt-2'></i> Admin Panel
+            </button>
+          </div>
+
+          <!-- Admin Live Analytics & Custom YouTube Link Tester Drawer -->
+          <div class="admin-analytics-panel" id="adminAnalyticsPanel" style="display: none;">
+            <h4><i class='bx bx-data'></i> Admin Controls & MySQL Student Watch-Time Telemetry</h4>
+            
+            <!-- Quick Test Any YouTube URL -->
+            <div class="admin-link-loader">
+              <input type="text" id="customYtUrl" placeholder="Paste any YouTube URL or Video ID to load in Smart Player..." />
+              <button class="btn btn-primary btn-sm" onclick="loadCustomYouTubeLink()">Load Video</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="analytics-table">
+                <thead>
+                  <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Lesson Watched</th>
+                    <th>Watch Duration</th>
+                    <th>Completion</th>
+                  </tr>
+                </thead>
+                <tbody id="analyticsTableBody">
+                  <tr>
+                    <td>#STU-1042</td>
+                    <td>Kasun Perera</td>
+                    <td>01. Introduction to Vectors</td>
+                    <td>42m 15s</td>
+                    <td><span class="badge-success">96%</span></td>
+                  </tr>
+                  <tr>
+                    <td>#STU-1089</td>
+                    <td>Fathima Zainab</td>
+                    <td>02. Newton's Laws & Friction</td>
+                    <td>38m 50s</td>
+                    <td><span class="badge-success">89%</span></td>
+                  </tr>
+                  <tr>
+                    <td>#GUEST-LIVE</td>
+                    <td id="adminStudentName">Current Session (You)</td>
+                    <td id="adminCurrentLesson">01. Introduction to Vectors & Scalars</td>
+                    <td id="adminCurrentWatch">0m 00s</td>
+                    <td><span class="badge-info" id="adminCurrentPct">0%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar: Free Lessons Playlist + AI Smart Notes -->
+        <div class="player-sidebar">
+          <div class="playlist-card">
+            <h3><i class='bx bx-list-ul'></i> Free Trial Lessons</h3>
+            <div class="lesson-list">
+              <button class="lesson-item active" onclick="loadVideo('M7lc1UVf-VE', '01. Introduction to Vectors & Scalars', this)">
+                <span class="lesson-num">01</span>
+                <div class="lesson-meta">
+                  <h4>Introduction to Vectors & Scalars</h4>
+                  <span>Free Class • 45 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+
+              <button class="lesson-item" onclick="loadVideo('aqz-KE-bpKQ', '02. Newtons Laws & Friction Tricks', this)">
+                <span class="lesson-num">02</span>
+                <div class="lesson-meta">
+                  <h4>Newton's Laws & Friction Tricks</h4>
+                  <span>Free Class • 52 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+
+              <button class="lesson-item" onclick="loadVideo('ScMzIvxBSi4', '03. Current Electricity Past Paper Qs', this)">
+                <span class="lesson-num">03</span>
+                <div class="lesson-meta">
+                  <h4>Current Electricity Past Paper Qs</h4>
+                  <span>Free Class • 38 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Lesson Companion Box -->
+          <div class="ai-notes-card" id="aiNotesBox">
+            <div class="ai-notes-header">
+              <span><i class='bx bx-sparkles'></i> AI Lesson Summary</span>
+              <span class="ai-tag">Smart Assistant</span>
+            </div>
+            <p id="aiSummaryText">
+              <strong>Key Formula:</strong> Resultant vector R = &radic;(A&sup2; + B&sup2; + 2AB cos&theta;). Resolve perpendicular components first before summing!<br>
+              Have a question about this lesson? Ask our AI Tutor below.
+            </p>
+            <button class="btn btn-primary btn-sm btn-full" onclick="toggleChatbot(true)">
+              <i class='bx bx-message-rounded-dots'></i> Ask Doubt About This Video
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AI & INTERACTIVE PHYSICS FEATURES ================= -->
+  <section class="section" id="ai-lab">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Smart Learning Ecosystem</span>
+        <h2 class="section-title">Why Students Love Shakeef Physics</h2>
+        <p class="section-desc">Combining structured Sri Lankan A/L syllabus mastery with next-generation AI tools.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-bot'></i></div>
+          <h3>24/7 AI Doubt Solver</h3>
+          <p>Stuck on a past paper MCQ at midnight? Get instant step-by-step explanations and formula breakdowns from our trained Physics AI.</p>
+          <button class="link-btn" onclick="toggleChatbot(true)">Try AI Tutor Now <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-atom'></i></div>
+          <h3>Interactive Physics Simulations</h3>
+          <p>Visualize projectile trajectories, wave interference, and circuits in real time instead of memorizing dry equations.</p>
+          <button class="link-btn" onclick="openSimModal()">Launch Mini Lab <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-line-chart'></i></div>
+          <h3>Smart Rank & Progress Tracker</h3>
+          <p>Automated MCQ grading, chapter-wise accuracy heatmaps, and watch-time analytics stored securely in your MySQL student portal.</p>
+          <button class="link-btn" onclick="openAuthModal('register')">View Student Portal <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-file'></i></div>
+          <h3>Digital Tutes & Past Paper Bank</h3>
+          <p>Download high-resolution structured notes, mind maps, and 1995–2025 A/L marking schemes organized by unit.</p>
+          <a href="#courses" class="link-btn">Browse Study Packs <i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STYLISH STUDENT TESTIMONIALS ================= -->
+  <section class="section bg-alt" id="testimonials">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Wall of Excellence</span>
+        <h2 class="section-title">What Our Students Say</h2>
+        <p class="section-desc">Real feedback from A/L students who transformed their Physics grades.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "Mechanics used to be my weakest section. Shakeef sir's visual breakdowns and speed paper discussions helped me jump from an S to an A in just 4 months!"
+          </p>
+          <div class="student-profile">
+            <div class="avatar">N</div>
+            <div>
+              <h4>Nethmi Jayawardena</h4>
+              <span>2025 A/L • 'A' Grade (Physical Science)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card featured-review">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "The online portal and AI doubt solver feel like having a personal tutor 24/7. Even when I missed a live class, the smart video player made catching up effortless."
+          </p>
+          <div class="student-profile">
+            <div class="avatar">A</div>
+            <div>
+              <h4>Abdullah Farook</h4>
+              <span>2025 A/L • 'A' Grade (Bio Science)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "Short notes, logical derivations, and zero time wasted. Every single past paper question is explained with exam-hall time-saving tricks."
+          </p>
+          <div class="student-profile">
+            <div class="avatar">D</div>
+            <div>
+              <h4>Dinuka Bandara</h4>
+              <span>2026 A/L Student • Kandy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL CHANNELS SHOWCASE ================= -->
+  <section class="section" id="channels">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Stay Connected</span>
+        <h2 class="section-title">Official Channels & Communities</h2>
+        <p class="section-desc">Join thousands of students receiving daily Physics MCQs, free seminars, and exam alerts.</p>
+      </div>
+
+      <div class="channels-grid">
+        <!-- YouTube Channel -->
+        <a href="https://youtube.com" target="_blank" rel="noopener" class="channel-card yt">
+          <div class="channel-icon"><i class='bx bxl-youtube'></i></div>
+          <div class="channel-info">
+            <h3>Shakeef Physics YouTube</h3>
+            <p>Free full theory lessons, past paper reviews & practical demonstrations.</p>
+            <span class="channel-cta">Subscribe Channel <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- Telegram Channel -->
+        <a href="https://telegram.org" target="_blank" rel="noopener" class="channel-card tg">
+          <div class="channel-icon"><i class='bx bxl-telegram'></i></div>
+          <div class="channel-info">
+            <h3>Official Telegram Hub</h3>
+            <p>Daily 7:00 AM MCQ polls, PDF tutes, mind maps & live class Zoom links.</p>
+            <span class="channel-cta">Join Telegram <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- WhatsApp Channel -->
+        <a href="https://wa.me/94770000000" target="_blank" rel="noopener" class="channel-card wa">
+          <div class="channel-icon"><i class='bx bxl-whatsapp'></i></div>
+          <div class="channel-info">
+            <h3>WhatsApp Student Channel</h3>
+            <p>Instant class reminders, exam timetables & direct helpline support.</p>
+            <span class="channel-cta">Follow Channel <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- Instagram / Reels -->
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="channel-card ig">
+          <div class="channel-icon"><i class='bx bxl-instagram-alt'></i></div>
+          <div class="channel-info">
+            <h3>60-Sec Physics Reels</h3>
+            <p>Quick formula memory hacks, experiment shorts & exam motivation.</p>
+            <span class="channel-cta">Follow Updates <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section class="section bg-alt" id="about">
+    <div class="container about-grid">
+      <div class="about-content">
+        <span class="section-tag">About Shakeef Physics</span>
+        <h2 class="section-title">Bridging Deep Physics Intuition with Modern Technology</h2>
+        <p>
+          Founded by <strong>Uthumalebbe Mohammed Shakeef</strong>, Shakeef Physics was built with a single mission: to eliminate the fear of A/L Physics among Sri Lankan students.
+        </p>
+        <p>
+          By combining disciplined classroom pedagogy with software-driven learning tools—such as interactive simulations, structured digital tutes, and AI-powered doubt resolution—students learn <em>why</em> a formula works, not just how to memorize it.
+        </p>
+        <ul class="about-checklist">
+          <li><i class='bx bxs-check-circle'></i> Complete Local Syllabus (English & Tamil Medium Support)</li>
+          <li><i class='bx bxs-check-circle'></i> Weekly Timed MCQ & Structured Essay Evaluations</li>
+          <li><i class='bx bxs-check-circle'></i> Dedicated LMS with MySQL Progress & Attendance Tracking</li>
+        </ul>
+      </div>
+      <div class="about-card-box">
+        <div class="mission-box">
+          <h3><i class='bx bx-target-lock'></i> Our Vision</h3>
+          <p>To make high-quality, technology-enabled Physics education accessible to every student across the island, empowering them to achieve top district and island ranks.</p>
+          <div class="contact-mini">
+            <div><i class='bx bx-envelope'></i> info@shakeefphysics.lk</div>
+            <div><i class='bx bx-phone'></i> +94 77 000 0000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <div class="brand-logo"><i class='bx bx-atom'></i></div>
+          <span class="brand-title">Shakeef Physics</span>
+        </div>
+        <p class="footer-desc">Next-generation A/L Physics academy powered by smart video learning and AI assistance.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#free-class">Free Smart Class</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Student Portal</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openAuthModal('login')">Student Sign In</a></li>
+          <li><a href="javascript:void(0)" onclick="openAuthModal('register')">New Registration</a></li>
+          <li><a href="javascript:void(0)" onclick="openSimModal()">Physics Simulations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Shakeef Physics. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING WHATSAPP & AI CHATBOT (BOTTOM RIGHT) ================= -->
+  <div class="floating-dock">
+    <!-- AI Chatbot Toggle Button -->
+    <button class="float-btn ai-float" id="aiChatToggle" title="Ask AI Physics Tutor">
+      <i class='bx bx-bot'></i>
+      <span class="float-label">AI Tutor</span>
+    </button>
+
+    <!-- WhatsApp Direct Button -->
+    <a href="https://wa.me/94770000000?text=Hello%20Shakeef%20Physics!%20I%20would%20like%20to%20know%20more%20about%20classes."
+       target="_blank" rel="noopener" class="float-btn wa-float" title="Chat on WhatsApp">
+      <i class='bx bxl-whatsapp'></i>
+    </a>
+  </div>
+
+  <!-- AI Chatbot Popup Window -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chat-header">
+      <div class="chat-title">
+        <i class='bx bx-bot'></i>
+        <div>
+          <h4>Shakeef AI Physics Tutor</h4>
+          <span>Online • Instant Doubt Solver</span>
+        </div>
+      </div>
+      <button onclick="toggleChatbot(false)" aria-label="Close Chat"><i class='bx bx-x'></i></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="msg bot">
+        Assalamu Alaikum / Hello! 👋 I'm your Shakeef Physics AI Assistant. Ask me any A/L Physics formula, concept, or class schedule question!
+      </div>
+    </div>
+    <div class="chat-suggestions">
+      <button onclick="sendQuickPrompt('Explain Newton 2nd Law')">Newton's 2nd Law</button>
+      <button onclick="sendQuickPrompt('2027 Theory Class Fee?')">2027 Class Info</button>
+      <button onclick="sendQuickPrompt('Projectile Range Formula')">Projectile Formula</button>
+    </div>
+    <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+      <input type="text" id="chatInput" placeholder="Type your physics doubt..." required />
+      <button type="submit" aria-label="Send"><i class='bx bxs-send'></i></button>
+    </form>
+  </div>
+
+  <!-- ================= SIGN IN / REGISTER MODAL ================= -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAuthModal()" aria-label="Close Modal"><i class='bx bx-x'></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
+        <h3>Welcome Back!</h3>
+        <p>Sign in to access your enrolled classes & watch history.</p>
+        <div class="form-group">
+          <label>Email or Student ID</label>
+          <input type="text" id="loginUser" placeholder="e.g. student@shakeefphysics.lk" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Sign In to Portal</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="auth-form" style="display:none;" onsubmit="handleAuthSubmit(event, 'register')">
+        <h3>Create Student Account</h3>
+        <p>Register to track your watch time, quizzes & class tutes.</p>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" placeholder="Your Full Name" required />
+        </div>
+        <div class="form-group">
+          <label>A/L Exam Batch</label>
+          <select required>
+            <option value="2026">2026 A/L</option>
+            <option value="2027">2027 A/L</option>
+            <option value="2028">2028 A/L</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" placeholder="07X XXXXXXX" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Create Password</label>
+          <input type="password" placeholder="Create strong password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Complete Registration</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MINI PROJECTILE SIMULATION MODAL ================= -->
+  <div class="modal-overlay" id="simModal">
+    <div class="modal-card modal-lg">
+      <button class="modal-close" onclick="closeSimModal()" aria-label="Close Simulation"><i class='bx bx-x'></i></button>
+      <h3><i class='bx bx-atom'></i> Interactive Projectile Motion Lab</h3>
+      <p>Adjust launch angle & velocity to visualize trajectory (g = 9.8 m/s&sup2;).</p>
+      <div class="sim-controls">
+        <label>Angle: <span id="angleVal">45</span>&deg;
+          <input type="range" id="angleSlider" min="15" max="85" value="45" oninput="drawProjectile()">
+        </label>
+        <label>Velocity: <span id="velVal">50</span> m/s
+          <input type="range" id="velSlider" min="20" max="80" value="50" oninput="drawProjectile()">
+        </label>
+      </div>
+      <canvas id="simCanvas" width="540" height="240"></canvas>
+      <div class="sim-readout" id="simReadout">Max Height: 63.8 m | Range: 255.1 m</div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    /* ================= 1. TOAST HELPER (NO ALERT) ================= */
+    function showToast(msg) {
+      const toast = document.getElementById('toastBanner');
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    /* ================= 2. THEME TOGGLE (LIGHT / DARK MODE) ================= */
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlEl = document.documentElement;
+
+    const savedTheme = localStorage.getItem('shakeef_theme') || 'light';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      setTheme(next);
+    });
+
+    function setTheme(theme) {
+      htmlEl.setAttribute('data-theme', theme);
+      localStorage.setItem('shakeef_theme', theme);
+      themeIcon.className = theme === 'dark' ? 'bx bx-sun' : 'bx bx-moon';
+    }
+
+    /* ================= 3. 3-BAR RESPONSIVE NAVIGATION ================= */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    /* ================= 4. COURSE LANDSCAPE SLIDER ================= */
+    const courseSlider = document.getElementById('courseSlider');
+    document.getElementById('slideLeft').addEventListener('click', () => {
+      courseSlider.scrollBy({ left: -360, behavior: 'smooth' });
+    });
+    document.getElementById('slideRight').addEventListener('click', () => {
+      courseSlider.scrollBy({ left: 360, behavior: 'smooth' });
+    });
+
+    /* ================= 5. SMART MASKED YOUTUBE PLAYER & WATCH TRACKER ================= */
+    let player;
+    let watchSeconds = 0;
+    let currentLessonTitle = '01. Introduction to Vectors & Scalars';
+    let currentVideoId = 'M7lc1UVf-VE';
+    let trackerInterval = null;
+
+    // Called automatically by YouTube IFrame API
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytPlayer', {
+        videoId: currentVideoId,
+        playerVars: {
+          controls: 0,        // Hide default YouTube controls
+          modestbranding: 1,  // Minimize YouTube branding
+          rel: 0,             // Disable unrelated suggested videos
+          showinfo: 0,
+          iv_load_policy: 3,  // Hide annotations
+          disablekb: 1,
+          fs: 0,
+          playsinline: 1
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady() {
+      setInterval(updateProgressUI, 500);
+    }
+
+    function onPlayerStateChange(event) {
+      const playBtnIcon = document.querySelector('#playPauseBtn i');
+      if (event.data === YT.PlayerState.PLAYING) {
+        playBtnIcon.className = 'bx bx-pause';
+        startWatchTracker();
+      } else {
+        playBtnIcon.className = 'bx bx-play';
+        stopWatchTracker();
+      }
+    }
+
+    function togglePlayPause() {
+      if (!player || typeof player.getPlayerState !== 'function') return;
+      const state = player.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    }
+
+    document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+    document.getElementById('iframeShield').addEventListener('click', togglePlayPause);
+
+    document.getElementById('rewindBtn').addEventListener('click', () => {
+      if (!player || typeof player.getCurrentTime !== 'function') return;
+      player.seekTo(Math.max(0, player.getCurrentTime() - 10), true);
+    });
+
+    document.getElementById('forwardBtn').addEventListener('click', () => {
+      if (!player || typeof player.getCurrentTime !== 'function') return;
+      player.seekTo(player.getCurrentTime() + 10, true);
+    });
+
+    document.getElementById('speedSelect').addEventListener('change', (e) => {
+      if (!player || typeof player.setPlaybackRate !== 'function') return;
+      player.setPlaybackRate(parseFloat(e.target.value));
+    });
+
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      const container = document.getElementById('customVideoBox');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.getElementById('progressArea').addEventListener('click', (e) => {
+      if (!player || typeof player.getDuration !== 'function') return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickRatio = (e.clientX - rect.left) / rect.width;
+      player.seekTo(clickRatio * player.getDuration(), true);
+    });
+
+    function updateProgressUI() {
+      if (!player || typeof player.getCurrentTime !== 'function') return;
+      const current = player.getCurrentTime() || 0;
+      const duration = player.getDuration() || 0;
+
+      document.getElementById('currentTime').textContent = formatTime(current);
+      document.getElementById('totalDuration').textContent = formatTime(duration);
+
+      if (duration > 0) {
+        const pct = Math.min(100, Math.round((current / duration) * 100));
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('completionPct').textContent = pct + '%';
+        document.getElementById('adminCurrentPct').textContent = pct + '%';
+      }
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    // Track actual student watch time & sync with MySQL API endpoint
+    function startWatchTracker() {
+      if (trackerInterval) return;
+      trackerInterval = setInterval(() => {
+        watchSeconds++;
+        const mins = Math.floor(watchSeconds / 60);
+        const secs = watchSeconds % 60;
+        const formatted = `${mins}m ${String(secs).padStart(2, '0')}s`;
+
+        document.getElementById('liveWatchTime').textContent = formatted;
+        document.getElementById('adminCurrentWatch').textContent = formatted;
+
+        // Every 15 seconds, send watch telemetry to MySQL backend (api/track_watch.php)
+        if (watchSeconds % 15 === 0) {
+          syncWatchTimeToMySQL(currentVideoId, currentLessonTitle, watchSeconds);
+        }
+      }, 1000);
+    }
+
+    function stopWatchTracker() {
+      clearInterval(trackerInterval);
+      trackerInterval = null;
+    }
+
+    function syncWatchTimeToMySQL(videoId, title, secondsWatched) {
+      fetch('api/track_watch.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student_id: localStorage.getItem('shakeef_student') || 'GUEST',
+          video_id: videoId,
+          lesson_title: title,
+          watched_seconds: secondsWatched
+        })
+      }).catch(() => {
+        // Silent fallback when running in static preview or GitHub Pages
+      });
+    }
+
+    // Switch Lesson in Playlist
+    function loadVideo(videoId, title, btnEl) {
+      currentVideoId = videoId;
+      currentLessonTitle = title;
+      watchSeconds = 0;
+
+      document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.getElementById('adminCurrentLesson').textContent = title;
+      document.getElementById('liveWatchTime').textContent = '0m 00s';
+      document.getElementById('adminCurrentWatch').textContent = '0m 00s';
+
+      // Update AI Lesson Summary dynamically
+      const summaries = {
+        'M7lc1UVf-VE': '<strong>Key Formula:</strong> Resultant vector R = &radic;(A&sup2; + B&sup2; + 2AB cos&theta;). Resolve perpendicular components first!',
+        'aqz-KE-bpKQ': '<strong>Key Formula:</strong> F<sub>net</sub> = ma and Limiting Friction f<sub>s</sub> = &mu;<sub>s</sub>R. Always draw a clean Free Body Diagram.',
+        'ScMzIvxBSi4': '<strong>Key Formula:</strong> Ohm\'s Law V = IR &amp; Kirchhoff\'s Junction Rule &Sigma;I<sub>in</sub> = &Sigma;I<sub>out</sub>.'
+      };
+      document.getElementById('aiSummaryText').innerHTML = summaries[videoId] ||
+        '<strong>AI Smart Mode:</strong> Custom lesson loaded! Ask any question about this video using our AI Physics Tutor.';
+
+      if (player && typeof player.loadVideoById === 'function') {
+        player.loadVideoById(videoId);
+      }
+    }
+
+    // Extract YouTube ID from full URL or ID string
+    function loadCustomYouTubeLink() {
+      const raw = document.getElementById('customYtUrl').value.trim();
+      if (!raw) return;
+      let extractedId = raw;
+      const match = raw.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+      if (match && match[1]) {
+        extractedId = match[1];
+      }
+      loadVideo(extractedId, 'Custom Admin Video (' + extractedId + ')', null);
+      showToast('Custom YouTube link loaded inside Smart Player!');
+    }
+
+    document.getElementById('aiNoteBtn').addEventListener('click', () => {
+      document.getElementById('aiNotesBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    function toggleAdminAnalytics() {
+      const panel = document.getElementById('adminAnalyticsPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    /* ================= 6. AI PHYSICS CHATBOT ================= */
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    document.getElementById('aiChatToggle').addEventListener('click', () => {
+      chatbotWindow.classList.toggle('open');
+    });
+
+    function toggleChatbot(forceState) {
+      if (forceState) chatbotWindow.classList.add('open');
+      else chatbotWindow.classList.remove('open');
+    }
+
+    function sendQuickPrompt(text) {
+      document.getElementById('chatInput').value = text;
+      handleChatSubmit(new Event('submit'));
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      appendMessage(userText, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        const reply = generatePhysicsAIReply(userText.toLowerCase());
+        appendMessage(reply, 'bot');
+      }, 450);
+    }
+
+    function appendMessage(text, sender) {
+      const chatBody = document.getElementById('chatBody');
+      const div = document.createElement('div');
+      div.className = `msg ${sender}`;
+      div.innerHTML = text;
+      chatBody.appendChild(div);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function generatePhysicsAIReply(q) {
+      if (q.includes('newton')) {
+        return "<b>Newton's 2nd Law:</b> The rate of change of momentum is directly proportional to the applied unbalanced force: <b>F = ma</b> (for constant mass).";
+      }
+      if (q.includes('projectile') || q.includes('range')) {
+        return "<b>Projectile Range Formula:</b><br>R = (u&sup2; sin 2&theta;) / g<br>Maximum horizontal range occurs at <b>&theta; = 45&deg;</b>!";
+      }
+      if (q.includes('2027') || q.includes('fee') || q.includes('class')) {
+        return "<b>2027 A/L Physics Theory:</b> Held every Saturday at 8:00 AM (Live + Smart Recording). Monthly fee is <b>LKR 2,500</b>. Click 'Register' at the top to join!";
+      }
+      return "Great question! For detailed step-by-step solving on <b>\"" + q + "\"</b>, check our AI Lesson Notes or message Shakeef Sir directly on WhatsApp using the green button below.";
+    }
+
+    /* ================= 7. AUTH MODAL (SIGN IN / REGISTER) ================= */
+    function openAuthModal(tab) {
+      document.getElementById('authModal').classList.add('open');
+      switchAuthTab(tab);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.remove('open');
+    }
+
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+
+      if (tab === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        tabLogin.classList.remove('active');
+        tabRegister.classList.add('active');
+      }
+    }
+
+    function handleAuthSubmit(e, type) {
+      e.preventDefault();
+      const userName = type === 'login'
+        ? document.getElementById('loginUser').value
+        : document.getElementById('regName').value;
+
+      localStorage.setItem('shakeef_student', userName);
+      document.getElementById('studentWatermark').textContent = `STUDENT: ${userName.toUpperCase()} • Shakeef Physics`;
+      document.getElementById('adminStudentName').textContent = userName;
+      document.getElementById('loggedUserName').textContent = userName.split('@')[0];
+      document.getElementById('userBadge').style.display = 'inline-flex';
+      document.getElementById('desktopAuthBtns').style.display = 'none';
+
+      closeAuthModal();
+      showToast(`Welcome to Shakeef Physics, ${userName}!`);
+    }
+
+    /* ================= 8. INTERACTIVE PROJECTILE SIMULATION ================= */
+    function openSimModal() {
+      document.getElementById('simModal').classList.add('open');
+      drawProjectile();
+    }
+
+    function closeSimModal() {
+      document.getElementById('simModal').classList.remove('open');
+    }
+
+    function drawProjectile() {
+      const angleDeg = parseFloat(document.getElementById('angleSlider').value);
+      const v0 = parseFloat(document.getElementById('velSlider').value);
+      document.getElementById('angleVal').textContent = angleDeg;
+      document.getElementById('velVal').textContent = v0;
+
+      const g = 9.8;
+      const rad = (angleDeg * Math.PI) / 180;
+      const maxH = (v0 * v0 * Math.sin(rad) * Math.sin(rad)) / (2 * g);
+      const range = (v0 * v0 * Math.sin(2 * rad)) / g;
+
+      document.getElementById('simReadout').textContent =
+        `Max Height: ${maxH.toFixed(1)} m  |  Horizontal Range: ${range.toFixed(1)} m`;
+
+      const canvas = document.getElementById('simCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Ground line
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(20, 215);
+      ctx.lineTo(520, 215);
+      ctx.stroke();
+
+      // Trajectory curve
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      const scale = 0.72;
+      for (let x = 0; x <= range; x += 2) {
+        const y = x * Math.tan(rad) - (g * x * x) / (2 * v0 * v0 * Math.cos(rad) * Math.cos(rad));
+        const px = 25 + x * scale;
+        const py = 215 - y * scale;
+        if (x === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+  </script>
+</body>
+</html>
