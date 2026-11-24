@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses & Smart Classroom | Shakeef Physics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-soft: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --bg-main: #ffffff;
+      --bg-alt: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.08);
+      --nav-bg: rgba(255, 255, 255, 0.94);
+    }
+
+    [data-theme="dark"] {
+      --primary: #34d399;
+      --primary-dark: #10b981;
+      --primary-soft: rgba(16, 185, 129, 0.14);
+      --primary-border: rgba(52, 211, 153, 0.3);
+      --bg-main: #111827;
+      --bg-alt: #182132;
+      --bg-card: #1f2937;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.38);
+      --nav-bg: rgba(17, 24, 39, 0.94);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-main); color: var(--text-main); line-height: 1.6; transition: 0.25s ease; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 16px; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; border: 1.5px solid transparent; transition: 0.2s ease;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    [data-theme="dark"] .btn-primary { color: #064e3b; font-weight: 700; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+    .btn-full { width: 100%; }
+
+    /* Navbar */
+    .navbar { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    .nav-container { max-width: 1240px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.45rem; }
+    .brand-title { font-weight: 800; font-size: 1.12rem; display: block; line-height: 1.1; }
+    .brand-tag { font-size: 0.72rem; color: var(--primary); font-weight: 600; }
+
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { font-weight: 600; font-size: 0.92rem; color: var(--text-muted); }
+    .nav-links a.active, .nav-links a:hover { color: var(--primary); }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .icon-btn { position: relative; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .notif-dot { position: absolute; top: 6px; right: 7px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; }
+
+    /* Notification Dropdown */
+    .notif-panel { position: absolute; top: 62px; right: 20px; width: 320px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; box-shadow: var(--shadow-md); padding: 14px; z-index: 1200; display: none; }
+    .notif-panel.open { display: block; }
+    .notif-item { padding: 10px; border-radius: 10px; background: var(--bg-alt); margin-top: 8px; font-size: 0.84rem; border-left: 3px solid var(--primary); }
+
+    /* Page Banner */
+    .page-header { padding: 40px 0 28px; background: radial-gradient(circle at top right, var(--primary-soft), transparent 60%); border-bottom: 1px solid var(--border-color); }
+    .header-flex { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
+    .page-header h1 { font-size: 2.1rem; font-weight: 800; }
+    .page-header p { color: var(--text-muted); }
+
+    /* Filter Bar */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; align-items: center; justify-content: space-between; }
+    .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill-btn { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+    .pill-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    [data-theme="dark"] .pill-btn.active { color: #064e3b; }
+
+    .demo-switch { display: flex; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 600; background: var(--primary-soft); padding: 6px 12px; border-radius: 10px; border: 1px solid var(--primary-border); }
+
+    /* Course Grid */
+    .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; padding-bottom: 60px; }
+    .course-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm); transition: 0.25s; display: flex; flex-direction: column; cursor: pointer; }
+    .course-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .c-thumb { position: relative; height: 175px; }
+    .c-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .c-batch { position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.85); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+    .c-validity { position: absolute; bottom: 10px; left: 10px; background: var(--primary); color: #fff; padding: 3px 9px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; }
+    [data-theme="dark"] .c-validity { color: #064e3b; }
+    .c-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+    .c-body h3 { font-size: 1.12rem; margin-bottom: 6px; }
+    .c-body p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; flex: 1; }
+    .c-meta { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); padding-top: 12px; border-top: 1px solid var(--border-color); margin-bottom: 12px; }
+    .c-progress-wrap { height: 6px; background: var(--bg-alt); border-radius: 6px; overflow: hidden; margin-bottom: 12px; }
+    .c-progress-fill { height: 100%; background: var(--primary); }
+
+    /* ================= COURSE CURRICULUM & PDF VIEW ================= */
+    .detail-view { display: none; padding: 28px 0 70px; }
+    .detail-view.active { display: block; }
+
+    .course-hero-banner { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin-bottom: 24px; display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 24px; align-items: center; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .info-tag { background: var(--primary-soft); color: var(--primary-dark); border: 1px solid var(--primary-border); padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; }
+    [data-theme="dark"] .info-tag { color: var(--primary); }
+
+    .detail-grid { display: grid; grid-template-columns: 1.45fr 0.85fr; gap: 24px; align-items: start; }
+    .panel-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 22px; margin-bottom: 20px; }
+    .panel-box h3 { font-size: 1.15rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+    /* Lesson Rows (Free vs Locked) */
+    .lesson-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-alt); margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+    .lesson-row:hover { border-color: var(--primary); }
+    .lesson-row.locked { opacity: 0.85; }
+    .l-left { display: flex; align-items: center; gap: 12px; }
+    .l-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+    .l-icon.free { background: var(--primary-soft); color: var(--primary); }
+    .l-icon.lock { background: #fee2e2; color: #ef4444; }
+    .l-badge { font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
+    .l-badge.free { background: var(--primary); color: #fff; }
+    [data-theme="dark"] .l-badge.free { color: #064e3b; }
+    .l-badge.lock { background: #fecaca; color: #991b1b; }
+
+    /* PDF Tute Cards */
+    .pdf-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-alt); margin-bottom: 10px; }
+    .pdf-info { display: flex; align-items: center; gap: 10px; }
+    .pdf-info i { font-size: 1.7rem; color: #ef4444; }
+    .pdf-actions { display: flex; gap: 6px; }
+
+    /* ================= SMART CLASSROOM PLAYER MODAL ================= */
+    .classroom-overlay { position: fixed; inset: 0; background: rgba(10, 15, 28, 0.88); backdrop-filter: blur(6px); z-index: 2000; display: none; overflow-y: auto; padding: 20px; }
+    .classroom-overlay.open { display: block; }
+    .classroom-shell { max-width: 1120px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-md); }
+    .classroom-top { padding: 14px 20px; background: var(--bg-alt); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+    .smart-video-stage { position: relative; width: 100%; aspect-ratio: 16/9; background: #050811; overflow: hidden; user-select: none; }
+    .smart-video-stage iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 120px); pointer-events: none; }
+    .video-shield { position: absolute; inset: 0; z-index: 2; }
+    .video-watermark { position: absolute; top: 14px; right: 16px; z-index: 3; background: rgba(15,23,42,0.65); color: #e2e8f0; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; pointer-events: none; }
+
+    .smart-controls { position: absolute; bottom: 0; left: 0; right: 0; z-index: 4; background: linear-gradient(to top, rgba(10,15,28,0.96), transparent); padding: 22px 16px 12px; color: #fff; }
+    .seek-track { width: 100%; height: 7px; background: rgba(255,255,255,0.25); border-radius: 8px; cursor: pointer; margin-bottom: 10px; }
+    .seek-fill { height: 100%; width: 0%; background: var(--primary); border-radius: 8px; }
+    .ctrl-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+    .ctrl-group { display: flex; align-items: center; gap: 10px; }
+    .ctrl-bar button { background: none; border: none; color: #fff; font-size: 1.35rem; cursor: pointer; display: flex; align-items: center; }
+    .ctrl-bar button:hover { color: var(--primary); }
+    .ctrl-select { background: rgba(255,255,255,0.16); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; }
+    .ctrl-select option { color: #0f172a; }
+
+    /* Interactive Mid-Video Quiz Gate */
+    .quiz-gate { padding: 22px; background: var(--primary-soft); border-top: 2px solid var(--primary); display: none; }
+    .quiz-gate.active { display: block; }
+    .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+    .q-opt { padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); text-align: left; font-weight: 600; cursor: pointer; }
+    .q-opt:hover { border-color: var(--primary); }
+    .q-opt.correct { background: #10b981; color: #fff; border-color: #10b981; }
+    .q-opt.wrong { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+    /* PDF Preview Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.72); z-index: 2200; display: none; align-items: center; justify-content: center; padding: 18px; }
+    .modal-overlay.open { display: flex; }
+    .pdf-modal-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; width: 100%; max-width: 760px; overflow: hidden; }
+    .pdf-modal-head { padding: 14px 18px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+    .pdf-preview-sheet { padding: 28px; background: #fff; color: #0f172a; min-height: 360px; max-height: 70vh; overflow-y: auto; }
+
+    @media (max-width: 900px) {
+      .course-hero-banner, .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-logo"><i class='bx bx-atom'></i></div>
+        <div>
+          <span class="brand-title">Shakeef Physics</span>
+          <span class="brand-tag">Smart LMS & Courses</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="courses.html" class="active">Courses</a>
+        <a href="index.html#free-class">Free Class</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Unwatched Progress Notification Bell -->
+        <button class="icon-btn" id="notifBtn" title="Study Reminders">
+          <i class='bx bx-bell'></i>
+          <span class="notif-dot" id="notifDot"></span>
+        </button>
+        <button class="icon-btn" id="themeBtn" title="Toggle Theme">
+          <i class='bx bx-moon' id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Unwatched Notification Drawer -->
+    <div class="notif-panel" id="notifPanel">
+      <strong><i class='bx bxs-bell-ring'></i> Smart Study Reminders</strong>
+      <div id="notifList"></div>
+    </div>
+  </header>
+
+  <!-- ================= VIEW 1: ALL COURSES CATALOG ================= -->
+  <main id="catalogView">
+    <section class="page-header">
+      <div class="container header-flex">
+        <div>
+          <h1>All Physics Courses & Lesson Packs</h1>
+          <p>Browse all batches, preview free lessons, download tutes, and track your video progress.</p>
+        </div>
+        <div class="demo-switch">
+          <input type="checkbox" id="paidAccessToggle" onchange="togglePaidAccess()" />
+          <label for="paidAccessToggle">Simulate Enrolled Student (Unlock Paid Lessons)</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="filter-bar">
+        <div class="filter-pills">
+          <button class="pill-btn active" onclick="filterCourses('ALL', this)">All Batches</button>
+          <button class="pill-btn" onclick="filterCourses('2027 A/L', this)">2027 A/L</button>
+          <button class="pill-btn" onclick="filterCourses('2026 A/L', this)">2026 A/L</button>
+          <button class="pill-btn" onclick="filterCourses('UNIT PACK', this)">Unit Packs</button>
+        </div>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid"></div>
+    </section>
+  </main>
+
+  <!-- ================= VIEW 2: COURSE CURRICULUM, ABOUT & PDFs ================= -->
+  <section class="detail-view" id="detailView">
+    <div class="container">
+      <button class="btn btn-outline btn-sm" style="margin-bottom:16px;" onclick="backToCatalog()">
+        <i class='bx bx-arrow-back'></i> Back to All Courses
+      </button>
+
+      <div class="course-hero-banner">
+        <div>
+          <div class="tag-row">
+            <span class="info-tag" id="dBatch">2027 A/L Batch</span>
+            <span class="info-tag" id="dValidity"><i class='bx bx-time-five'></i> Valid for 180 Days</span>
+            <span class="info-tag" id="dPrice">LKR 2,500</span>
+          </div>
+          <h1 id="dTitle" style="font-size:1.85rem; margin-bottom:8px;">Course Title</h1>
+          <p id="dShortDesc" style="color:var(--text-muted); margin-bottom:14px;"></p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="enrollCourseAlert()"><i class='bx bx-lock-open-alt'></i> Enroll & Unlock All Lessons</button>
+          </div>
+        </div>
+        <div class="panel-box" style="margin-bottom:0;">
+          <h3><i class='bx bx-line-chart'></i> Your Course Progress</h3>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:8px;">
+            Completed: <strong id="dProgressText">0%</strong>
+          </p>
+          <div class="c-progress-wrap" style="height:10px;">
+            <div class="c-progress-fill" id="dProgressBar" style="width:0%;"></div>
+          </div>
+          <small style="color:var(--text-muted);">Complete the mid-video quiz in each lesson to mark 100% progress.</small>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <!-- Left: Lessons List -->
+        <div>
+          <div class="panel-box">
+            <h3><i class='bx bx-play-circle'></i> Course Lessons (Click a Lesson to Launch Smart Classroom)</h3>
+            <div id="dLessonsList"></div>
+          </div>
+
+          <div class="panel-box">
+            <h3><i class='bx bx-info-circle'></i> About This Class</h3>
+            <p id="dAboutText" style="color:var(--text-muted); font-size:0.94rem;"></p>
+          </div>
+        </div>
+
+        <!-- Right: PDF Tutes & Marking Schemes -->
+        <div>
+          <div class="panel-box">
+            <h3><i class='bx bxs-file-pdf'></i> Class Tutes & PDF Notes</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Preview online or download directly to your device.</p>
+            <div id="dPdfList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SMART CLASSROOM VIDEO PLAYER MODAL ================= -->
+  <div class="classroom-overlay" id="classroomOverlay">
+    <div class="classroom-shell">
+      <div class="classroom-top">
+        <div>
+          <span class="info-tag" id="playerBadge">FREE PREVIEW</span>
+          <strong id="playerLessonTitle" style="margin-left:8px;">01. Introduction to Vectors</strong>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-outline btn-sm" onclick="triggerQuizGate()"><i class='bx bx-help-circle'></i> Trigger Quiz Now</button>
+          <button class="btn btn-primary btn-sm" onclick="closeClassroom()"><i class='bx bx-x'></i> Close Player</button>
+        </div>
+      </div>
+
+      <!-- Masked YouTube Stage -->
+      <div class="smart-video-stage" id="smartStage" oncontextmenu="return false;">
+        <div class="video-watermark">STUDENT: SHAKEEF-LMS • Protected Stream</div>
+        <div class="video-shield"></div>
+        <div id="ytClassroomPlayer"></div>
+
+        <div class="smart-controls">
+          <div class="seek-track" id="seekTrack"><div class="seek-fill" id="seekFill"></div></div>
+          <div class="ctrl-bar">
+            <div class="ctrl-group">
+              <button id="cPlayBtn" title="Play/Pause"><i class='bx bx-play'></i></button>
+              <button onclick="seekBy(-10)" title="Back 10s"><i class='bx bx-rewind'></i></button>
+              <button onclick="seekBy(10)" title="Forward 10s"><i class='bx bx-fast-forward'></i></button>
+              <span id="cTimeDisplay" style="font-size:0.82rem;">00:00 / 00:00</span>
+            </div>
+
+            <div class="ctrl-group">
+              <!-- Video Quality Selector -->
+              <select class="ctrl-select" id="qualitySelect" onchange="changeQuality(this.value)" title="Video Quality">
+                <option value="default">Quality: Auto</option>
+                <option value="hd1080">1080p HD</option>
+                <option value="hd720">720p HD</option>
+                <option value="large">480p</option>
+                <option value="medium">360p (Data Saver)</option>
+              </select>
+
+              <!-- Playback Speed -->
+              <select class="ctrl-select" id="speedSelect" onchange="changeSpeed(this.value)" title="Speed">
+                <option value="1">1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+
+              <button onclick="toggleFullScreen()" title="Fullscreen"><i class='bx bx-fullscreen'></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mid-Video / End-of-Video Interactive Quiz Lock -->
+      <div class="quiz-gate" id="quizGate">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="color:var(--primary-dark);"><i class='bx bx-brain'></i> Checkpoint Quiz — Answer to Continue Watching!</h3>
+          <span class="info-tag">Required to unlock remaining video</span>
+        </div>
+        <p id="quizQuestionText" style="font-weight:700; margin-top:8px;"></p>
+        <div class="quiz-options" id="quizOptionsBox"></div>
+        <p id="quizFeedback" style="font-weight:700; font-size:0.9rem;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PDF PREVIEW MODAL ================= -->
+  <div class="modal-overlay" id="pdfModal">
+    <div class="pdf-modal-box">
+      <div class="pdf-modal-head">
+        <strong id="pdfModalTitle">Tute Preview</strong>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-primary btn-sm" id="pdfModalDownloadBtn"><i class='bx bx-download'></i> Download</button>
+          <button class="btn btn-outline btn-sm" onclick="closePdfModal()">Close</button>
+        </div>
+      </div>
+      <div class="pdf-preview-sheet" id="pdfPreviewContent"></div>
+    </div>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    /* ================= COURSE DATABASE (JSON STRUCTURE) ================= */
+    const coursesData = [
+      {
+        id: 'c1',
+        title: '2027 A/L Complete Physics Theory — Mechanics',
+        batch: '2027 A/L',
+        validityDays: 180,
+        price: 'LKR 2,500 / mo',
+        thumb: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80',
+        shortDesc: 'Master Vectors, Kinematics, Newton’s Laws, and Equilibrium with step-by-step derivations.',
+        about: 'This 2027 A/L Theory module covers Unit 02 (Mechanics) from fundamental definitions up to advanced structured essay & MCQ problem solving. Includes printable tutes, past paper classifications (2000–2025), and checkpoint quizzes.',
+        pdfs: [
+          { name: 'Unit 02 - Vectors & Kinematics Tute.pdf', size: '2.4 MB', previewText: 'SHAKEEF PHYSICS - 2027 A/L THEORY TUTE\n\n1. Scalar vs Vector Quantities\n- Scalar: Magnitude only (Mass, Time, Speed, Work).\n- Vector: Magnitude + Direction (Displacement, Velocity, Force, Momentum).\n\n2. Resultant of Two Vectors:\nR = sqrt(A^2 + B^2 + 2AB cos(theta))' },
+          { name: 'Mechanics Past Paper MCQ Bank (2015-2025).pdf', size: '3.1 MB', previewText: 'PAST PAPER MCQ DRILL - MECHANICS\n\nQ1. A stone is projected vertically upwards with velocity 20 m/s. Find max height (g = 10 m/s^2).\nAnswer: H = u^2 / 2g = 400 / 20 = 20 m.' }
+        ],
+        lessons: [
+          {
+            id: 'l1',
+            title: '01. Introduction to Vectors & Resolution (Free Trial)',
+            duration: '45:10',
+            ytId: 'M7lc1UVf-VE',
+            isFree: true,
+            quiz: {
+              question: 'If two perpendicular forces of 3 N and 4 N act on a particle, what is the magnitude of the resultant force?',
+              options: ['5 N', '7 N', '1 N', '12 N'],
+              answerIndex: 0
+            }
+          },
+          {
+            id: 'l2',
+            title: '02. Equations of Motion & Velocity-Time Graphs',
+            duration: '52:30',
+            ytId: 'aqz-KE-bpKQ',
+            isFree: false,
+            quiz: {
+              question: 'What does the area under a Velocity-Time (v-t) graph represent?',
+              options: ['Acceleration', 'Displacement', 'Force', 'Momentum'],
+              answerIndex: 1
+            }
+          },
+          {
+            id: 'l3',
+            title: '03. Projectile Motion & Range Optimization',
+            duration: '48:15',
+            ytId: 'ScMzIvxBSi4',
+            isFree: false,
+            quiz: {
+              question: 'At what launch angle does a projectile achieve maximum horizontal range on level ground?',
+              options: ['30°', '45°', '60°', '90°'],
+              answerIndex: 1
+            }
+          }
+        ]
+      },
+      {
+        id: 'c2',
+        title: '2026 A/L Speed Revision & Paper Masterclass',
+        batch: '2026 A/L',
+        validityDays: 120,
+        price: 'LKR 3,000 / mo',
+        thumb: 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=800&q=80',
+        shortDesc: 'Complete syllabus revision with timed MCQ drills and structured essay marking schemes.',
+        about: 'Designed specifically for 2026 A/L students targeting an A grade. Every week covers rapid theory recap, 50-MCQ timed paper discussion, and structured practical questions.',
+        pdfs: [
+          { name: '2026 Speed Revision Formula Book.pdf', size: '4.0 MB', previewText: 'RAPID FORMULA HANDBOOK - 2026 A/L\n\n- Current Electricity: V = IR, P = I^2R\n- Gravitational Field: g = GM / R^2\n- Waves: v = f * lambda' }
+        ],
+        lessons: [
+          {
+            id: 'l4',
+            title: '01. Current Electricity & Kirchhoff Laws (Free Preview)',
+            duration: '50:00',
+            ytId: 'M7lc1UVf-VE',
+            isFree: true,
+            quiz: {
+              question: 'Kirchhoff’s First Law (Junction Rule) is based on the conservation of:',
+              options: ['Energy', 'Charge', 'Momentum', 'Mass'],
+              answerIndex: 1
+            }
+          },
+          {
+            id: 'l5',
+            title: '02. Operational Amplifiers & Logic Circuits',
+            duration: '55:40',
+            ytId: 'aqz-KE-bpKQ',
+            isFree: false,
+            quiz: {
+              question: 'For an ideal Op-Amp in negative feedback, the voltage difference between inverting and non-inverting inputs is:',
+              options: ['Infinite', 'Zero (Virtual Short)', '5 V', '12 V'],
+              answerIndex: 1
+            }
+          }
+        ]
+      },
+      {
+        id: 'c3',
+        title: 'Fields & Electromagnetism Special Unit Pack',
+        batch: 'UNIT PACK',
+        validityDays: 90,
+        price: 'LKR 1,800',
+        thumb: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+        shortDesc: 'Gravitational, Electrostatic, and Magnetic Fields explained with 3D field line intuition.',
+        about: '90-day intensive unit pack covering Units 05, 06, and 07. Ideal for students who want to master field calculations and past paper essay problems quickly.',
+        pdfs: [
+          { name: 'Gravitational & Electric Fields Summary.pdf', size: '1.9 MB', previewText: 'UNIT 05 & 06 FIELD EQUATIONS\n\nGauss Law: Phi = Q_enclosed / epsilon_0' }
+        ],
+        lessons: [
+          {
+            id: 'l6',
+            title: '01. Gauss’s Law & Electric Flux (Free Lesson)',
+            duration: '41:20',
+            ytId: 'ScMzIvxBSi4',
+            isFree: true,
+            quiz: {
+              question: 'What is the SI unit of Electric Flux?',
+              options: ['N m² C⁻¹', 'N C⁻¹', 'J C⁻¹', 'V m⁻¹'],
+              answerIndex: 0
+            }
+          },
+          {
+            id: 'l7',
+            title: '02. Magnetic Force on Moving Charges & Hall Effect',
+            duration: '47:15',
+            ytId: 'M7lc1UVf-VE',
+            isFree: false,
+            quiz: {
+              question: 'When a charge moves parallel to a uniform magnetic field, the magnetic force acting on it is:',
+              options: ['qvB', 'Zero', 'qv/B', 'Maximum'],
+              answerIndex: 1
+            }
+          }
+        ]
+      }
+    ];
+
+    /* ================= STATE & STORAGE ================= */
+    let isPaidUser = false;
+    let selectedCourse = null;
+    let activeLesson = null;
+    let completedLessons = JSON.parse(localStorage.getItem('sp_completed_lessons') || '[]');
+    let ytPlayer = null;
+    let quizTriggeredForCurrent = false;
+
+    /* ================= THEME & NOTIFICATIONS ================= */
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const savedTheme = localStorage.getItem('sp_theme') || 'light';
+    setTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    });
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('sp_theme', t);
+      themeIcon.className = t === 'dark' ? 'bx bx-sun' : 'bx bx-moon';
+    }
+
+    document.getElementById('notifBtn').addEventListener('click', () => {
+      document.getElementById('notifPanel').classList.toggle('open');
+    });
+
+    function updateNotifications() {
+      const notifList = document.getElementById('notifList');
+      const allLessons = coursesData.flatMap(c => c.lessons.map(l => ({ ...l, courseTitle: c.title })));
+      const unwatched = allLessons.filter(l => !completedLessons.includes(l.id));
+
+      document.getElementById('notifDot').style.display = unwatched.length ? 'block' : 'none';
+      if (!unwatched.length) {
+        notifList.innerHTML = `<div class="notif-item">All lessons watched & quizzes completed! 🎉</div>`;
+        return;
+      }
+      notifList.innerHTML = unwatched.slice(0, 3).map(u => `
+        <div class="notif-item">
+          <strong>Unwatched Reminder:</strong><br>
+          You haven't completed <b>${u.title}</b> (${u.courseTitle}).
+        </div>
+      `).join('');
+    }
+
+    /* ================= RENDER CATALOG ================= */
+    function renderCourses(filter = 'ALL') {
+      const grid = document.getElementById('coursesGrid');
+      const list = filter === 'ALL' ? coursesData : coursesData.filter(c => c.batch === filter);
+
+      grid.innerHTML = list.map(course => {
+        const doneCount = course.lessons.filter(l => completedLessons.includes(l.id)).length;
+        const pct = Math.round((doneCount / course.lessons.length) * 100);
+        const freeCount = course.lessons.filter(l => l.isFree).length;
+
+        return `
+          <div class="course-card" onclick="openCourseDetail('${course.id}')">
+            <div class="c-thumb">
+              <img src="${course.thumb}" alt="${course.title}">
+              <span class="c-batch">${course.batch}</span>
+              <span class="c-validity"><i class='bx bx-calendar'></i> ${course.validityDays} Days Access</span>
+            </div>
+            <div class="c-body">
+              <h3>${course.title}</h3>
+              <p>${course.shortDesc}</p>
+              <div class="c-meta">
+                <span><i class='bx bx-video'></i> ${course.lessons.length} Lessons (${freeCount} Free)</span>
+                <strong style="color:var(--primary);">${course.price}</strong>
+              </div>
+              <div class="c-progress-wrap"><div class="c-progress-fill" style="width:${pct}%"></div></div>
+              <button class="btn btn-primary btn-full">View Lessons & PDFs</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterCourses(batch, btn) {
+      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCourses(batch);
+    }
+
+    function togglePaidAccess() {
+      isPaidUser = document.getElementById('paidAccessToggle').checked;
+      if (selectedCourse) renderCourseDetail();
+    }
+
+    /* ================= COURSE CURRICULUM & PDF VIEW ================= */
+    function openCourseDetail(courseId) {
+      selectedCourse = coursesData.find(c => c.id === courseId);
+      document.getElementById('catalogView').style.display = 'none';
+      document.getElementById('detailView').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderCourseDetail();
+    }
+
+    function backToCatalog() {
+      selectedCourse = null;
+      document.getElementById('detailView').classList.remove('active');
+      document.getElementById('catalogView').style.display = 'block';
+      renderCourses();
+    }
+
+    function renderCourseDetail() {
+      const c = selectedCourse;
+      document.getElementById('dBatch').textContent = c.batch;
+      document.getElementById('dValidity').innerHTML = `<i class='bx bx-time-five'></i> Valid for ${c.validityDays} Days`;
+      document.getElementById('dPrice').textContent = c.price;
+      document.getElementById('dTitle').textContent = c.title;
+      document.getElementById('dShortDesc').textContent = c.shortDesc;
+      document.getElementById('dAboutText').textContent = c.about;
+
+      const doneCount = c.lessons.filter(l => completedLessons.includes(l.id)).length;
+      const pct = Math.round((doneCount / c.lessons.length) * 100);
+      document.getElementById('dProgressText').textContent = `${pct}% (${doneCount}/${c.lessons.length} Lessons)`;
+      document.getElementById('dProgressBar').style.width = pct + '%';
+
+      // Render Lessons (Free vs Locked)
+      document.getElementById('dLessonsList').innerHTML = c.lessons.map(lesson => {
+        const unlocked = lesson.isFree || isPaidUser;
+        const isDone = completedLessons.includes(lesson.id);
+        return `
+          <div class="lesson-row ${unlocked ? '' : 'locked'}" onclick="handleLessonClick('${lesson.id}')">
+            <div class="l-left">
+              <div class="l-icon ${unlocked ? 'free' : 'lock'}">
+                <i class='bx ${unlocked ? (isDone ? 'bxs-check-circle' : 'bx-play') : 'bxs-lock-alt'}'></i>
+              </div>
+              <div>
+                <div style="font-weight:700; font-size:0.95rem;">${lesson.title}</div>
+                <small style="color:var(--text-muted);"><i class='bx bx-time'></i> ${lesson.duration} • Includes Checkpoint Quiz</small>
+              </div>
+            </div>
+            <span class="l-badge ${unlocked ? 'free' : 'lock'}">
+              ${unlocked ? (lesson.isFree ? 'FREE ACCESS' : 'UNLOCKED') : 'LOCKED'}
+            </span>
+          </div>
+        `;
+      }).join('');
+
+      // Render PDFs (Preview + Download)
+      document.getElementById('dPdfList').innerHTML = c.pdfs.map((pdf, idx) => `
+        <div class="pdf-card">
+          <div class="pdf-info">
+            <i class='bx bxs-file-pdf'></i>
+            <div>
+              <strong style="font-size:0.88rem; display:block;">${pdf.name}</strong>
+              <small style="color:var(--text-muted);">${pdf.size}</small>
+            </div>
+          </div>
+          <div class="pdf-actions">
+            <button class="btn btn-outline btn-sm" onclick="previewPdf(${idx})">Preview</button>
+            <button class="btn btn-primary btn-sm" onclick="downloadPdf(${idx})"><i class='bx bx-download'></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function enrollCourseAlert() {
+      alert('To unlock all paid lessons for "' + selectedCourse.title + '", sign in or toggle "Simulate Enrolled Student" at the top of the Courses page to test full access!');
+    }
+
+    /* ================= PDF PREVIEW & DOWNLOAD ================= */
+    function previewPdf(idx) {
+      const pdf = selectedCourse.pdfs[idx];
+      document.getElementById('pdfModalTitle').textContent = pdf.name;
+      document.getElementById('pdfPreviewContent').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; line-height:1.7;">${pdf.previewText}</pre>`;
+      document.getElementById('pdfModalDownloadBtn').onclick = () => downloadPdf(idx);
+      document.getElementById('pdfModal').classList.add('open');
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdfModal').classList.remove('open');
+    }
+
+    function downloadPdf(idx) {
+      const pdf = selectedCourse.pdfs[idx];
+      const blob = new Blob([pdf.previewText], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = pdf.name;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    /* ================= SMART CLASSROOM PLAYER & QUIZ LOCK ================= */
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('ytClassroomPlayer', {
+        videoId: 'M7lc1UVf-VE',
+        playerVars: { controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1 },
+        events: {
+          onStateChange: (e) => {
+            const icon = document.querySelector('#cPlayBtn i');
+            icon.className = e.data === YT.PlayerState.PLAYING ? 'bx bx-pause' : 'bx bx-play';
+          }
+        }
+      });
+      setInterval(monitorClassroomVideo, 600);
+    }
+
+    function handleLessonClick(lessonId) {
+      const lesson = selectedCourse.lessons.find(l => l.id === lessonId);
+      const unlocked = lesson.isFree || isPaidUser;
+      if (!unlocked) {
+        alert('🔒 This lesson is locked! Enroll in this batch (or check "Simulate Enrolled Student" at the top) to unlock.');
+        return;
+      }
+
+      activeLesson = lesson;
+      quizTriggeredForCurrent = false;
+      document.getElementById('quizGate').classList.remove('active');
+      document.getElementById('playerBadge').textContent = lesson.isFree ? 'FREE CLASS' : 'ENROLLED CLASS';
+      document.getElementById('playerLessonTitle').textContent = lesson.title;
+      document.getElementById('classroomOverlay').classList.add('open');
+
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        ytPlayer.loadVideoById(lesson.ytId);
+      }
+    }
+
+    function closeClassroom() {
+      document.getElementById('classroomOverlay').classList.remove('open');
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+      if (selectedCourse) renderCourseDetail();
+      updateNotifications();
+    }
+
+    document.getElementById('cPlayBtn').addEventListener('click', () => {
+      if (!ytPlayer) return;
+      if (document.getElementById('quizGate').classList.contains('active')) return; // Locked until quiz solved
+      ytPlayer.getPlayerState() === YT.PlayerState.PLAYING ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
+    });
+
+    function seekBy(sec) {
+      if (!ytPlayer || document.getElementById('quizGate').classList.contains('active')) return;
+      ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() + sec), true);
+    }
+
+    document.getElementById('seekTrack').addEventListener('click', (e) => {
+      if (!ytPlayer || document.getElementById('quizGate').classList.contains('active')) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      ytPlayer.seekTo(ratio * ytPlayer.getDuration(), true);
+    });
+
+    function changeQuality(q) {
+      if (ytPlayer && typeof ytPlayer.setPlaybackQuality === 'function') {
+        ytPlayer.setPlaybackQuality(q);
+      }
+    }
+
+    function changeSpeed(s) {
+      if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
+        ytPlayer.setPlaybackRate(parseFloat(s));
+      }
+    }
+
+    function toggleFullScreen() {
+      const stage = document.getElementById('smartStage');
+      if (!document.fullscreenElement) stage.requestFullscreen().catch(() => {});
+      else document.exitFullscreen();
+    }
+
+    function monitorClassroomVideo() {
+      if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function' || !activeLesson) return;
+      const cur = ytPlayer.getCurrentTime() || 0;
+      const dur = ytPlayer.getDuration() || 0;
+
+      const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+      document.getElementById('cTimeDisplay').textContent = `${fmt(cur)} / ${fmt(dur)}`;
+
+      if (dur > 0) {
+        document.getElementById('seekFill').style.width = Math.min(100, (cur / dur) * 100) + '%';
+      }
+
+      // Automatically pause at 12 seconds (or 50% of video) to launch checkpoint quiz
+      if (cur >= 12 && !quizTriggeredForCurrent && !completedLessons.includes(activeLesson.id)) {
+        triggerQuizGate();
+      }
+    }
+
+    function triggerQuizGate() {
+      if (!activeLesson) return;
+      quizTriggeredForCurrent = true;
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+
+      const q = activeLesson.quiz;
+      document.getElementById('quizQuestionText').textContent = q.question;
+      document.getElementById('quizFeedback').textContent = '';
+      document.getElementById('quizOptionsBox').innerHTML = q.options.map((opt, idx) => `
+        <button class="q-opt" onclick="submitQuizAnswer(${idx}, this)">${opt}</button>
+      `).join('');
+
+      document.getElementById('quizGate').classList.add('active');
+    }
+
+    function submitQuizAnswer(selectedIdx, btnEl) {
+      const q = activeLesson.quiz;
+      const fb = document.getElementById('quizFeedback');
+
+      if (selectedIdx === q.answerIndex) {
+        btnEl.classList.add('correct');
+        fb.style.color = '#059669';
+        fb.textContent = '✅ Correct! Lesson unlocked — resuming video...';
+
+        if (!completedLessons.includes(activeLesson.id)) {
+          completedLessons.push(activeLesson.id);
+          localStorage.setItem('sp_completed_lessons', JSON.stringify(completedLessons));
+        }
+
+        setTimeout(() => {
+          document.getElementById('quizGate').classList.remove('active');
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+        }, 1200);
+      } else {
+        btnEl.classList.add('wrong');
+        fb.style.color = '#ef4444';
+        fb.textContent = '❌ Incorrect. Try again to unlock the rest of the video!';
+      }
+    }
+
+    // Initialize Page
+    renderCourses();
+    updateNotifications();
+  </script>
+</body>
+</html>
