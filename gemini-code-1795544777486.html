@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shakeef Physics | Next-Gen A/L Physics Learning Platform</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Boxicons for crisp modern icons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ================= NAVBAR (3-BAR RESPONSIVE) ================= -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Brand Logo + Name -->
+      <a href="#home" class="brand">
+        <div class="brand-logo">
+          <!-- Replace with <img src="assets/logo.png" alt="Shakeef Physics Logo"> -->
+          <i class='bx bx-atom'></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Shakeef Physics</span>
+          <span class="brand-tag">A/L Physics Academy</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#courses" class="nav-link">Courses</a></li>
+          <li><a href="#free-class" class="nav-link">Free Smart Class</a></li>
+          <li><a href="#ai-lab" class="nav-link">AI & Simulations</a></li>
+          <li><a href="#testimonials" class="nav-link">Results</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+        <div class="nav-mobile-actions">
+          <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
+          <button class="btn btn-primary" onclick="openAuthModal('register')">Register</button>
+        </div>
+      </nav>
+
+      <!-- Right Controls: Theme Toggle, Auth Buttons & 3-Bar Hamburger -->
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark/Light Mode" title="Switch Theme">
+          <i class='bx bx-moon' id="themeIcon"></i>
+        </button>
+
+        <div class="auth-buttons desktop-only">
+          <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
+          <button class="btn btn-primary" onclick="openAuthModal('register')">Register</button>
+        </div>
+
+        <!-- 3-Bar Hamburger Menu -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION & INSTRUCTOR CARD ================= -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <!-- Left Content -->
+      <div class="hero-content">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span> 2026 & 2027 A/L Admissions Open
+        </div>
+        <h1>Master A/L Physics with <span class="text-gradient">Concept Clarity</span> & AI Power</h1>
+        <p class="hero-sub">
+          Join Sri Lanka's modern physics learning ecosystem. Structured Theory, Speed Revision, Past Paper Clinics, Interactive 3D Simulations, and 24/7 AI Doubt Solving.
+        </p>
+        <div class="hero-cta">
+          <a href="#courses" class="btn btn-primary btn-lg">
+            Explore Courses <i class='bx bx-right-arrow-alt'></i>
+          </a>
+          <a href="#free-class" class="btn btn-outline btn-lg">
+            <i class='bx bx-play-circle'></i> Watch Free Class
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3>5,000+</h3>
+            <p>Active Students</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3>98%</h3>
+            <p>Pass & 'A' Rate</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3>24/7</h3>
+            <p>AI Physics Tutor</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Your Profile Card -->
+      <div class="hero-card-wrapper">
+        <div class="instructor-card">
+          <div class="card-glow"></div>
+          <div class="instructor-img-box">
+            <!-- Replace src with your photo: assets/shakeef.jpg -->
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=600&q=80" alt="Shakeef - Physics Educator" />
+            <div class="verified-badge">
+              <i class='bx bxs-badge-check'></i> Lead Educator
+            </div>
+          </div>
+          <div class="instructor-info">
+            <h2>U. M. Shakeef</h2>
+            <p class="qual">B.Sc. (Hons) Software Engineering (UG) | Physics Educator</p>
+            <p class="bio">
+              Simplifying complex A/L Physics concepts through logical visualization, exam-targeted paper discussions, and smart AI-assisted learning tools.
+            </p>
+            <div class="instructor-tags">
+              <span><i class='bx bx-check-circle'></i> Theory & Revision</span>
+              <span><i class='bx bx-check-circle'></i> Paper Masterclass</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AVAILABLE COURSES (LANDSCAPE SLIDER) ================= -->
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="section-header-flex">
+        <div>
+          <span class="section-tag">Academic Programs</span>
+          <h2 class="section-title">Available Physics Courses</h2>
+          <p class="section-desc">Swipe or use arrows to explore our structured batches designed for top island ranks.</p>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn" id="slideLeft" aria-label="Scroll Left"><i class='bx bx-chevron-left'></i></button>
+          <button class="slider-btn" id="slideRight" aria-label="Scroll Right"><i class='bx bx-chevron-right'></i></button>
+        </div>
+      </div>
+
+      <!-- Horizontal Landscape Slider -->
+      <div class="course-slider" id="courseSlider">
+        <!-- Course Card 1 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80" alt="2027 Theory Batch">
+            <span class="course-badge live">LIVE + RECORDED</span>
+            <span class="course-price">LKR 2,500 / mo</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-calendar'></i> 2027 A/L Batch</span>
+              <span><i class='bx bx-time-five'></i> Sat 8:00 AM</span>
+            </div>
+            <h3>2027 A/L Complete Physics Theory</h3>
+            <p>Zero-to-Hero full syllabus coverage with tutes, practical discussions, and monthly online exams.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 2 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=800&q=80" alt="2026 Speed Revision">
+            <span class="course-badge hot">POPULAR</span>
+            <span class="course-price">LKR 3,000 / mo</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-calendar'></i> 2026 A/L Batch</span>
+              <span><i class='bx bx-time-five'></i> Sun 8:00 AM</span>
+            </div>
+            <h3>2026 Rapid Revision & Paper Class</h3>
+            <p>Complete syllabus recap in 6 months + 20 years of past papers & model paper timing drills.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 3 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80" alt="Mechanics Mastery">
+            <span class="course-badge">UNIT PACK</span>
+            <span class="course-price">LKR 1,800</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-layer'></i> Unit 02 Special</span>
+              <span><i class='bx bx-video'></i> 24 Lessons</span>
+            </div>
+            <h3>Mechanics & Rotational Motion Special</h3>
+            <p>Deep-dive problem solving for Mechanics with interactive vector & motion simulations.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 4 -->
+        <div class="course-card">
+          <div class="course-banner">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Electronics & Fields">
+            <span class="course-badge">UNIT PACK</span>
+            <span class="course-price">LKR 2,000</span>
+          </div>
+          <div class="course-body">
+            <div class="course-meta">
+              <span><i class='bx bx-chip'></i> Units 05 - 08</span>
+              <span><i class='bx bx-video'></i> 30 Lessons</span>
+            </div>
+            <h3>Electric, Magnetic Fields & Electronics</h3>
+            <p>Crystal clear circuit analysis, op-amps, logic gates, and field theory simplified.</p>
+            <div class="course-footer">
+              <button class="btn btn-primary btn-full" onclick="openAuthModal('register')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SMART PROTECTED FREE CLASS PLAYER ================= -->
+  <section class="section bg-alt" id="free-class">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Experience Our Teaching</span>
+        <h2 class="section-title">Free Smart Physics Class</h2>
+        <p class="section-desc">Watch our sample lesson in our distraction-free AI Smart Player with real-time engagement analytics.</p>
+      </div>
+
+      <div class="smart-player-layout">
+        <!-- Custom Masked YouTube Player Box -->
+        <div class="player-wrapper">
+          <div class="custom-video-container" id="customVideoBox" oncontextmenu="return false;">
+            <!-- Watermark (Anti-Piracy Student ID) -->
+            <div class="player-watermark" id="studentWatermark">ID: GUEST-VIEWER • Shakeef Physics</div>
+
+            <!-- YouTube Iframe (Masked & Controls Hidden) -->
+            <div class="iframe-shield"></div>
+            <div id="ytPlayer"></div>
+
+            <!-- Custom Branded Controls Overlay -->
+            <div class="custom-controls">
+              <div class="progress-area" id="progressArea">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+              <div class="controls-row">
+                <div class="controls-left">
+                  <button id="playPauseBtn" title="Play/Pause"><i class='bx bx-play'></i></button>
+                  <button id="rewindBtn" title="Rewind 10s"><i class='bx bx-rewind'></i></button>
+                  <button id="forwardBtn" title="Forward 10s"><i class='bx bx-fast-forward'></i></button>
+                  <span class="time-display"><span id="currentTime">00:00</span> / <span id="totalDuration">00:00</span></span>
+                </div>
+                <div class="controls-right">
+                  <select id="speedSelect" title="Playback Speed">
+                    <option value="1">1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                  </select>
+                  <button id="aiNoteBtn" title="AI Smart Summary"><i class='bx bx-bot'></i> AI Notes</button>
+                  <button id="fullscreenBtn" title="Fullscreen"><i class='bx bx-fullscreen'></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lesson Selector + Admin/Viewer Telemetry Bar -->
+          <div class="telemetry-bar">
+            <div class="telemetry-item">
+              <i class='bx bx-show'></i>
+              <div>
+                <strong id="totalViewsCount">1,428</strong>
+                <span>Total Views</span>
+              </div>
+            </div>
+            <div class="telemetry-item">
+              <i class='bx bx-time'></i>
+              <div>
+                <strong id="liveWatchTime">0m 00s</strong>
+                <span>Your Watch Time (Synced to DB)</span>
+              </div>
+            </div>
+            <div class="telemetry-item">
+              <i class='bx bx-check-shield'></i>
+              <div>
+                <strong id="completionPct">0%</strong>
+                <span>Lesson Progress</span>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="toggleAdminAnalytics()">
+              <i class='bx bx-bar-chart-alt-2'></i> Admin View
+            </button>
+          </div>
+
+          <!-- Hidden Admin Live Analytics Drawer (Shows how MySQL tracks students) -->
+          <div class="admin-analytics-panel" id="adminAnalyticsPanel" style="display: none;">
+            <h4><i class='bx bx-data'></i> MySQL Student Watch-Time Telemetry (Admin Preview)</h4>
+            <div class="table-responsive">
+              <table class="analytics-table">
+                <thead>
+                  <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Lesson Watched</th>
+                    <th>Watch Duration</th>
+                    <th>Completion</th>
+                  </tr>
+                </thead>
+                <tbody id="analyticsTableBody">
+                  <tr>
+                    <td>#STU-1042</td>
+                    <td>Kasun Perera</td>
+                    <td>01. Projectile Motion</td>
+                    <td>42m 15s</td>
+                    <td><span class="badge-success">96%</span></td>
+                  </tr>
+                  <tr>
+                    <td>#STU-1089</td>
+                    <td>Fathima Zainab</td>
+                    <td>01. Projectile Motion</td>
+                    <td>38m 50s</td>
+                    <td><span class="badge-success">89%</span></td>
+                  </tr>
+                  <tr>
+                    <td>#GUEST-LIVE</td>
+                    <td>Current Session (You)</td>
+                    <td id="adminCurrentLesson">01. Introduction to Vectors</td>
+                    <td id="adminCurrentWatch">0m 00s</td>
+                    <td><span class="badge-info" id="adminCurrentPct">0%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar: Free Lessons Playlist + AI Smart Notes -->
+        <div class="player-sidebar">
+          <div class="playlist-card">
+            <h3><i class='bx bx-list-ul'></i> Free Trial Lessons</h3>
+            <div class="lesson-list">
+              <button class="lesson-item active" onclick="loadVideo('M7lc1UVf-VE', '01. Introduction to Vectors & Scalars', this)">
+                <span class="lesson-num">01</span>
+                <div class="lesson-meta">
+                  <h4>Introduction to Vectors & Scalars</h4>
+                  <span>Free Class • 45 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+
+              <button class="lesson-item" onclick="loadVideo('aqz-KE-bpKQ', '02. Newtons Laws & Friction Tricks', this)">
+                <span class="lesson-num">02</span>
+                <div class="lesson-meta">
+                  <h4>Newton's Laws & Friction Tricks</h4>
+                  <span>Free Class • 52 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+
+              <button class="lesson-item" onclick="loadVideo('ScMzIvxBSi4', '03. Current Electricity Past Paper Qs', this)">
+                <span class="lesson-num">03</span>
+                <div class="lesson-meta">
+                  <h4>Current Electricity Past Paper Qs</h4>
+                  <span>Free Class • 38 mins</span>
+                </div>
+                <i class='bx bx-play-circle'></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Lesson Companion Box -->
+          <div class="ai-notes-card" id="aiNotesBox">
+            <div class="ai-notes-header">
+              <span><i class='bx bx-sparkles'></i> AI Lesson Summary</span>
+              <span class="ai-tag">Smart Assistant</span>
+            </div>
+            <p id="aiSummaryText">
+              <strong>Key Formula:</strong> Resultant vector $R = \sqrt{A^2 + B^2 + 2AB\cos\theta}$.<br>
+              Click <b>"Ask AI"</b> below if you have any doubt while watching this video!
+            </p>
+            <button class="btn btn-primary btn-sm btn-full" onclick="toggleChatbot(true)">
+              <i class='bx bx-message-rounded-dots'></i> Ask Doubt About This Video
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AI & INTERACTIVE PHYSICS FEATURES ================= -->
+  <section class="section" id="ai-lab">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Smart Learning Ecosystem</span>
+        <h2 class="section-title">Why Students Love Shakeef Physics</h2>
+        <p class="section-desc">Combining structured Sri Lankan A/L syllabus mastery with next-generation AI tools.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-bot'></i></div>
+          <h3>24/7 AI Doubt Solver</h3>
+          <p>Stuck on a past paper MCQ at midnight? Get instant step-by-step explanations and formula breakdowns from our trained Physics AI.</p>
+          <button class="link-btn" onclick="toggleChatbot(true)">Try AI Tutor Now <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-atom'></i></div>
+          <h3>Interactive Physics Simulations</h3>
+          <p>Visualize projectile trajectories, wave interference, and circuits in real time instead of memorizing dry equations.</p>
+          <button class="link-btn" onclick="openSimModal()">Launch Mini Lab <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-line-chart'></i></div>
+          <h3>Smart Rank & Progress Tracker</h3>
+          <p>Automated MCQ grading, chapter-wise accuracy heatmaps, and watch-time analytics stored securely in your student portal.</p>
+          <button class="link-btn" onclick="openAuthModal('register')">View Student Portal <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class='bx bx-file'></i></div>
+          <h3>Digital Tutes & Past Paper Bank</h3>
+          <p>Download high-resolution structured notes, mind maps, and 1995–2025 A/L marking schemes organized by unit.</p>
+          <a href="#courses" class="link-btn">Browse Study Packs <i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STYLISH STUDENT TESTIMONIALS ================= -->
+  <section class="section bg-alt" id="testimonials">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Wall of Excellence</span>
+        <h2 class="section-title">What Our Students Say</h2>
+        <p class="section-desc">Real feedback from A/L students who transformed their Physics grades.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "Mechanics used to be my weakest section. Shakeef sir's visual breakdowns and speed paper discussions helped me jump from an S to an A in just 4 months!"
+          </p>
+          <div class="student-profile">
+            <div class="avatar">N</div>
+            <div>
+              <h4>Nethmi Jayawardena</h4>
+              <span>2025 A/L • 'A' Grade (Physical Science)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card featured-review">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "The online portal and AI doubt solver feel like having a personal tutor 24/7. Even when I missed a live class, the smart video player made catching up effortless."
+          </p>
+          <div class="student-profile">
+            <div class="avatar">A</div>
+            <div>
+              <h4>Abdullah Farook</h4>
+              <span>2025 A/L • 'A' Grade (Bio Science)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class='bx bxs-quote-alt-left'></i></div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">
+            "Short notes, logical derivations, and zero time wasted. Every single past paper question is explained with exam-hall time-saving tricks."
+          </p>
+          <div class="student-profile">
+            <div class="avatar">D</div>
+            <div>
+              <h4>Dinuka Bandara</h4>
+              <span>2026 A/L Student • Kandy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL CHANNELS SHOWCASE ================= -->
+  <section class="section" id="channels">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-tag">Stay Connected</span>
+        <h2 class="section-title">Official Channels & Communities</h2>
+        <p class="section-desc">Join thousands of students receiving daily Physics MCQs, free seminars, and exam alerts.</p>
+      </div>
+
+      <div class="channels-grid">
+        <!-- YouTube Channel -->
+        <a href="https://youtube.com" target="_blank" class="channel-card yt">
+          <div class="channel-icon"><i class='bx bxl-youtube'></i></div>
+          <div class="channel-info">
+            <h3>Shakeef Physics YouTube</h3>
+            <p>Free full theory lessons, past paper reviews & practical demonstrations.</p>
+            <span class="channel-cta">Subscribe Channel <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- Telegram Channel -->
+        <a href="https://telegram.org" target="_blank" class="channel-card tg">
+          <div class="channel-icon"><i class='bx bxl-telegram'></i></div>
+          <div class="channel-info">
+            <h3>Official Telegram Hub</h3>
+            <p>Daily 7:00 AM MCQ polls, PDF tutes, mind maps & live class Zoom links.</p>
+            <span class="channel-cta">Join Telegram <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- WhatsApp Channel -->
+        <a href="https://wa.me/94770000000" target="_blank" class="channel-card wa">
+          <div class="channel-icon"><i class='bx bxl-whatsapp'></i></div>
+          <div class="channel-info">
+            <h3>WhatsApp Student Channel</h3>
+            <p>Instant class reminders, exam timetables & direct helpline support.</p>
+            <span class="channel-cta">Follow Channel <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+
+        <!-- TikTok / Instagram Reels -->
+        <a href="https://instagram.com" target="_blank" class="channel-card ig">
+          <div class="channel-icon"><i class='bx bxl-instagram-alt'></i></div>
+          <div class="channel-info">
+            <h3>60-Sec Physics Reels</h3>
+            <p>Quick formula memory hacks, experiment shorts & exam motivation.</p>
+            <span class="channel-cta">Follow Updates <i class='bx bx-link-external'></i></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section class="section bg-alt" id="about">
+    <div class="container about-grid">
+      <div class="about-content">
+        <span class="section-tag">About Shakeef Physics</span>
+        <h2 class="section-title">Bridging Deep Physics Intuition with Modern Technology</h2>
+        <p>
+          Founded by <strong>Uthumalebbe Mohammed Shakeef</strong>, Shakeef Physics was built with a single mission: to eliminate the fear of A/L Physics among Sri Lankan students.
+        </p>
+        <p>
+          By combining disciplined classroom pedagogy with software-driven learning tools—such as interactive simulations, structured digital tutes, and AI-powered doubt resolution—students learn <em>why</em> a formula works, not just how to memorize it.
+        </p>
+        <ul class="about-checklist">
+          <li><i class='bx bxs-check-circle'></i> Complete Local Syllabus (English & Tamil Medium Support)</li>
+          <li><i class='bx bxs-check-circle'></i> Weekly Timed MCQ & Structured Essay Evaluations</li>
+          <li><i class='bx bxs-check-circle'></i> Dedicated LMS with MySQL Progress & Attendance Tracking</li>
+        </ul>
+      </div>
+      <div class="about-card-box">
+        <div class="mission-box">
+          <h3><i class='bx bx-target-lock'></i> Our Vision</h3>
+          <p>To make high-quality, technology-enabled Physics education accessible to every student across the island, empowering them to achieve top district and island ranks.</p>
+          <div class="contact-mini">
+            <div><i class='bx bx-envelope'></i> info@shakeefphysics.lk</div>
+            <div><i class='bx bx-phone'></i> +94 77 000 0000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <div class="brand-logo"><i class='bx bx-atom'></i></div>
+          <span class="brand-title">Shakeef Physics</span>
+        </div>
+        <p class="footer-desc">Next-generation A/L Physics academy powered by smart video learning and AI assistance.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#free-class">Free Smart Class</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Student Portal</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openAuthModal('login')">Student Sign In</a></li>
+          <li><a href="javascript:void(0)" onclick="openAuthModal('register')">New Registration</a></li>
+          <li><a href="#ai-lab">Physics Simulations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Shakeef Physics. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING WHATSAPP & AI CHATBOT (BOTTOM RIGHT) ================= -->
+  <div class="floating-dock">
+    <!-- AI Chatbot Toggle Button -->
+    <button class="float-btn ai-float" id="aiChatToggle" title="Ask AI Physics Tutor">
+      <i class='bx bx-bot'></i>
+      <span class="float-label">AI Tutor</span>
+    </button>
+
+    <!-- WhatsApp Direct Button -->
+    <a href="https://wa.me/94770000000?text=Hello%20Shakeef%20Physics!%20I%20would%20like%20to%20know%20more%20about%20classes."
+       target="_blank" class="float-btn wa-float" title="Chat on WhatsApp">
+      <i class='bx bxl-whatsapp'></i>
+    </a>
+  </div>
+
+  <!-- AI Chatbot Popup Window -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chat-header">
+      <div class="chat-title">
+        <i class='bx bx-bot'></i>
+        <div>
+          <h4>Shakeef AI Physics Tutor</h4>
+          <span>Online • Instant Doubt Solver</span>
+        </div>
+      </div>
+      <button onclick="toggleChatbot(false)"><i class='bx bx-x'></i></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="msg bot">
+        Assalamu Alaikum / Hello! 👋 I'm your Shakeef Physics AI Assistant. Ask me any A/L Physics formula, concept, or class schedule question!
+      </div>
+    </div>
+    <div class="chat-suggestions">
+      <button onclick="sendQuickPrompt('Explain Newton 2nd Law')">Newton's 2nd Law</button>
+      <button onclick="sendQuickPrompt('2027 Theory Class Fee?')">2027 Class Info</button>
+      <button onclick="sendQuickPrompt('Projectile Range Formula')">Projectile Formula</button>
+    </div>
+    <form class="chat-input-area" onsubmit="handleChatSubmit(event)">
+      <input type="text" id="chatInput" placeholder="Type your physics doubt..." required />
+      <button type="submit"><i class='bx bxs-send'></i></button>
+    </form>
+  </div>
+
+  <!-- ================= SIGN IN / REGISTER MODAL ================= -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAuthModal()"><i class='bx bx-x'></i></button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form" onsubmit="handleAuthSubmit(event, 'login')">
+        <h3>Welcome Back!</h3>
+        <p>Sign in to access your enrolled classes & watch history.</p>
+        <div class="form-group">
+          <label>Email or Student ID</label>
+          <input type="text" id="loginUser" placeholder="e.g. student@shakeefphysics.lk" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Sign In to Portal</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="auth-form" style="display:none;" onsubmit="handleAuthSubmit(event, 'register')">
+        <h3>Create Student Account</h3>
+        <p>Register to track your watch time, quizzes & class tutes.</p>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" placeholder="Your Full Name" required />
+        </div>
+        <div class="form-group">
+          <label>A/L Exam Batch</label>
+          <select required>
+            <option value="2026">2026 A/L</option>
+            <option value="2027">2027 A/L</option>
+            <option value="2028">2028 A/L</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" placeholder="07X XXXXXXX" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Create Password</label>
+          <input type="password" placeholder="Create strong password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Complete Registration</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MINI PROJECTILE SIMULATION MODAL ================= -->
+  <div class="modal-overlay" id="simModal">
+    <div class="modal-card modal-lg">
+      <button class="modal-close" onclick="closeSimModal()"><i class='bx bx-x'></i></button>
+      <h3><i class='bx bx-atom'></i> Interactive Projectile Motion Lab</h3>
+      <p>Adjust launch angle & velocity to visualize trajectory ($g = 9.8\,\text{m/s}^2$).</p>
+      <div class="sim-controls">
+        <label>Angle: <span id="angleVal">45</span>°
+          <input type="range" id="angleSlider" min="15" max="85" value="45" oninput="drawProjectile()">
+        </label>
+        <label>Velocity: <span id="velVal">50</span> m/s
+          <input type="range" id="velSlider" min="20" max="80" value="50" oninput="drawProjectile()">
+        </label>
+      </div>
+      <canvas id="simCanvas" width="540" height="240"></canvas>
+      <div class="sim-readout" id="simReadout">Max Height: 63.8 m | Range: 255.1 m</div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API & Main Script -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
