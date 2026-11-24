@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paper Center | Shakeef Physics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-soft: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --bg-main: #ffffff;
+      --bg-alt: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.08);
+      --nav-bg: rgba(255, 255, 255, 0.94);
+    }
+
+    [data-theme="dark"] {
+      --primary: #34d399;
+      --primary-dark: #10b981;
+      --primary-soft: rgba(16, 185, 129, 0.14);
+      --primary-border: rgba(52, 211, 153, 0.3);
+      --bg-main: #111827;
+      --bg-alt: #182132;
+      --bg-card: #1f2937;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.38);
+      --nav-bg: rgba(17, 24, 39, 0.94);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-main); color: var(--text-main); line-height: 1.6; transition: 0.25s ease; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 16px; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; border: 1.5px solid transparent; transition: 0.2s ease;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    [data-theme="dark"] .btn-primary { color: #064e3b; font-weight: 700; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-main); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+    .btn-full { width: 100%; }
+
+    /* Navbar */
+    .navbar { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    .nav-container { max-width: 1240px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.45rem; }
+    .brand-title { font-weight: 800; font-size: 1.12rem; display: block; line-height: 1.1; }
+    .brand-tag { font-size: 0.72rem; color: var(--primary); font-weight: 600; }
+
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { font-weight: 600; font-size: 0.92rem; color: var(--text-muted); }
+    .nav-links a.active, .nav-links a:hover { color: var(--primary); }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+    /* Header & Search */
+    .page-header { padding: 38px 0 28px; background: radial-gradient(circle at top right, var(--primary-soft), transparent 60%); border-bottom: 1px solid var(--border-color); }
+    .header-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .page-header h1 { font-size: 2.1rem; font-weight: 800; }
+    .page-header p { color: var(--text-muted); }
+
+    .search-box-wrap { position: relative; max-width: 640px; width: 100%; }
+    .search-box-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: var(--text-muted); }
+    .search-input { width: 100%; padding: 12px 16px 12px 42px; border-radius: 12px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.95rem; outline: none; }
+    .search-input:focus { border-color: var(--primary); }
+
+    /* Category Pills */
+    .cat-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0; }
+    .cat-pill { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); font-weight: 600; font-size: 0.82rem; cursor: pointer; transition: 0.2s; }
+    .cat-pill:hover, .cat-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    [data-theme="dark"] .cat-pill.active { color: #064e3b; }
+
+    /* Category Cards Grid */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(295px, 1fr)); gap: 20px; padding-bottom: 64px; }
+    .paper-cat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; box-shadow: var(--shadow-sm); transition: 0.22s ease; display: flex; flex-direction: column; cursor: pointer; }
+    .paper-cat-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .cat-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .count-tag { background: var(--bg-alt); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 700; color: var(--text-muted); }
+    .paper-cat-card h3 { font-size: 1.08rem; margin-bottom: 6px; }
+    .paper-cat-card p { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 16px; flex: 1; }
+
+    /* Selected Set Drawer / View */
+    .set-drawer { display: none; padding: 28px 0 70px; }
+    .set-drawer.active { display: block; }
+    .set-banner { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; padding: 22px; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; }
+
+    .pdf-item-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; }
+    .pdf-meta { display: flex; align-items: center; gap: 12px; }
+    .pdf-meta i { font-size: 1.9rem; color: #ef4444; }
+    .pdf-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* Modals (PDF Preview & Request Paper) */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.72); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 18px; width: 100%; max-width: 780px; overflow: hidden; box-shadow: var(--shadow-md); }
+    .modal-box.sm { max-width: 460px; padding: 24px; }
+    .modal-head { padding: 14px 18px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .pdf-sheet { padding: 26px; background: #ffffff; color: #0f172a; min-height: 320px; max-height: 68vh; overflow-y: auto; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 4px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-alt); color: var(--text-main); }
+
+    .toast { position: fixed; bottom: 22px; right: 22px; background: var(--primary-dark); color: #fff; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; z-index: 3000; display: none; box-shadow: var(--shadow-md); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .page-header h1 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-logo"><i class='bx bx-atom'></i></div>
+        <div>
+          <span class="brand-title">Shakeef Physics</span>
+          <span class="brand-tag">Paper Center</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="paper-center.html" class="active">Paper Center</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary btn-sm" onclick="openRequestModal()">
+          <i class='bx bx-file-plus'></i> Request Paper
+        </button>
+        <button class="icon-btn" id="themeBtn" title="Toggle Theme">
+          <i class='bx bx-moon' id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CATALOG & SEARCH VIEW -->
+  <main id="mainCatalog">
+    <section class="page-header">
+      <div class="container">
+        <div class="header-top">
+          <div>
+            <h1>A/L Physics Paper Center</h1>
+            <p>Past papers, school & provincial papers, notes, guides, 2000+ books, and more — preview, download, or share.</p>
+          </div>
+          <button class="btn btn-outline" onclick="openRequestModal()">
+            <i class='bx bx-message-square-add'></i> Request Missing PDF
+          </button>
+        </div>
+
+        <div class="search-box-wrap">
+          <i class='bx bx-search'></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search papers, schools, books, notes, or syllabus (e.g., Royal, Mora, FWC, Jeyakumar)..." oninput="renderCards()" />
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="cat-bar" id="catBar"></div>
+      <div class="cards-grid" id="cardsGrid"></div>
+    </section>
+  </main>
+
+  <!-- SELECTED CATEGORY / PAPER SET VIEW -->
+  <section class="set-drawer" id="setDrawer">
+    <div class="container">
+      <button class="btn btn-outline btn-sm" style="margin-bottom:14px;" onclick="closeSetDrawer()">
+        <i class='bx bx-arrow-back'></i> Back to All Categories
+      </button>
+
+      <div class="set-banner">
+        <div>
+          <span style="color:var(--primary); font-weight:700; font-size:0.82rem;" id="drawerGroupLabel">CATEGORY</span>
+          <h2 id="drawerTitle" style="font-size:1.6rem;">Paper Set Title</h2>
+          <p id="drawerDesc" style="color:var(--text-muted); font-size:0.9rem;"></p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="shareLink(window.location.href, document.getElementById('drawerTitle').textContent)">
+          <i class='bx bx-share-alt'></i> Share Set
+        </button>
+      </div>
+
+      <div id="drawerPdfList"></div>
+    </div>
+  </section>
+
+  <!-- PDF PREVIEW MODAL -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <strong id="previewTitle">Document Preview</strong>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-outline btn-sm" id="previewShareBtn"><i class='bx bx-share-alt'></i> Share</button>
+          <button class="btn btn-primary btn-sm" id="previewDownloadBtn"><i class='bx bx-download'></i> Download</button>
+          <button class="btn btn-outline btn-sm" onclick="closePreviewModal()">Close</button>
+        </div>
+      </div>
+      <div class="pdf-sheet" id="previewSheet"></div>
+    </div>
+  </div>
+
+  <!-- REQUEST PAPER MODAL -->
+  <div class="modal-overlay" id="requestModal">
+    <div class="modal-box sm">
+      <div class="modal-head" style="padding:0 0 12px; margin-bottom:14px;">
+        <h3><i class='bx bx-file-plus'></i> Request a Paper or Book</h3>
+        <button class="btn btn-outline btn-sm" onclick="closeRequestModal()"><i class='bx bx-x'></i></button>
+      </div>
+      <form onsubmit="submitRequest(event)">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="reqCategory">
+            <option>Past Papers</option>
+            <option>Model Papers</option>
+            <option>Mora Exam Papers</option>
+            <option>FWC Paper</option>
+            <option>Royal College Paper</option>
+            <option>Provincial Paper</option>
+            <option>Short Notes / Physics Notes</option>
+            <option>Practical Guide / Teachers Guide</option>
+            <option>Syllabus / Elaboration</option>
+            <option>Sinhala Medium Tamil Translated Papers</option>
+            <option>Shakeef Physics Paper</option>
+            <option>2000+ Books</option>
+            <option>Jeyakumar Theory and Books</option>
+            <option>Other Papers</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Paper / Book Name & Year</label>
+          <input type="text" id="reqName" placeholder="e.g., 2024 Royal College Term 3 Physics + Marking" required />
+        </div>
+        <div class="form-group">
+          <label>Medium & Extra Notes</label>
+          <textarea id="reqNotes" rows="3" placeholder="Mention English/Tamil/Sinhala medium or specific question set..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Submit Request</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toastBox"></div>
+
+  <script>
+    /* ================= PAPER CENTER DATA (ALL REQUESTED CATEGORIES) ================= */
+    const paperCategories = [
+      {
+        id: 'past-papers',
+        group: 'Exams',
+        title: 'Past Papers',
+        icon: 'bx-book-bookmark',
+        desc: 'G.C.E. A/L Physics past papers with marking schemes and structured essay guides.',
+        items: [
+          { name: '2024 A/L Physics Past Paper & Marking.pdf', size: '3.4 MB', sample: 'G.C.E. A/L PHYSICS - 2024 PAST PAPER\nPart A: 50 MCQs | Part B: 4 Structured Essays | Part C: 6 Essays (Answer 4).' },
+          { name: '2020-2023 A/L Physics Compilation.pdf', size: '8.2 MB', sample: 'A/L PHYSICS PAST PAPER BUNDLE (2020 - 2023)\nIncludes mechanics, oscillations, waves, fields, and electronics.' }
+        ]
+      },
+      {
+        id: 'model-papers',
+        group: 'Exams',
+        title: 'Model Papers',
+        icon: 'bx-notepad',
+        desc: 'Exam-standard model papers designed to build speed and accuracy.',
+        items: [
+          { name: 'A/L Physics Model Paper Set 01 (Full).pdf', size: '2.1 MB', sample: 'SHAKEEF PHYSICS MODEL PAPER 01\nTime: 3 Hours | Focus: High-weightage A/L problem patterns.' }
+        ]
+      },
+      {
+        id: 'mora-papers',
+        group: 'School & Uni',
+        title: 'Mora Exam Papers',
+        icon: 'bx-award',
+        desc: 'Moratuwa / engineering-level exam papers and challenging problem sets.',
+        items: [
+          { name: 'Mora Term & Assessment Paper Pack.pdf', size: '2.7 MB', sample: 'MORA EXAM SERIES - PHYSICS\nAnalytical mechanics and circuit problem solving set.' }
+        ]
+      },
+      {
+        id: 'fwc-paper',
+        group: 'School & Uni',
+        title: 'FWC Paper',
+        icon: 'bx-building-house',
+        desc: 'FWC exam papers and term test collections.',
+        items: [
+          { name: 'FWC Term Test Physics Paper + Scheme.pdf', size: '1.8 MB', sample: 'FWC PHYSICS EXAMINATION PAPER\nIncludes MCQ answer key and step-by-step calculation hints.' }
+        ]
+      },
+      {
+        id: 'royal-college',
+        group: 'School & Uni',
+        title: 'Royal College Paper',
+        icon: 'bx-crown',
+        desc: 'Royal College term tests, model exams, and marking schemes.',
+        items: [
+          { name: 'Royal College Term 2 & 3 Physics Papers.pdf', size: '4.5 MB', sample: 'ROYAL COLLEGE A/L PHYSICS TERM EXAMINATION\nStructured essay and practical-based questions.' }
+        ]
+      },
+      {
+        id: 'provincial-paper',
+        group: 'School & Uni',
+        title: 'Provincial Paper',
+        icon: 'bx-map-alt',
+        desc: 'Western, Central, Southern, Northern, and other provincial term papers.',
+        items: [
+          { name: 'Provincial Term Test Physics Collection.pdf', size: '5.1 MB', sample: 'PROVINCIAL PHYSICS EXAMINATION SERIES\nCovers core syllabus units across school terms.' }
+        ]
+      },
+      {
+        id: 'short-notes',
+        group: 'Notes',
+        title: 'Short Notes',
+        icon: 'bx-bolt-circle',
+        desc: 'Quick revision sheets, formula summaries, and mind maps.',
+        items: [
+          { name: 'Mechanics & Waves Quick Short Notes.pdf', size: '1.5 MB', sample: 'SHORT NOTES - MECHANICS & WAVES\nKey equations, units, conditions, and common traps.' }
+        ]
+      },
+      {
+        id: 'physics-notes',
+        group: 'Notes',
+        title: 'Physics Notes',
+        icon: 'bx-book-open',
+        desc: 'Detailed classroom notes and structured explanations.',
+        items: [
+          { name: 'Complete Electrostatics & Current Notes.pdf', size: '3.9 MB', sample: 'DETAILED PHYSICS NOTES - ELECTRICITY\nGauss law, capacitors, DC circuits, and Kirchhoff rules.' }
+        ]
+      },
+      {
+        id: 'practical-guide',
+        group: 'Guides',
+        title: 'Practical Guide',
+        icon: 'bx-test-tube',
+        desc: 'Laboratory practicals, error analysis, graphs, and apparatus precautions.',
+        items: [
+          { name: 'A/L Physics Practicals & Precautions Guide.pdf', size: '3.2 MB', sample: 'PRACTICAL GUIDE - A/L PHYSICS\nVernier caliper, micrometer, travelling microscope, optical bench, potentiometer.' }
+        ]
+      },
+      {
+        id: 'teachers-guide',
+        group: 'Guides',
+        title: 'Teachers Guide',
+        icon: 'bx-chalkboard',
+        desc: 'Official instructional and competency guidelines for A/L Physics.',
+        items: [
+          { name: 'A/L Physics Teachers Instructional Manual.pdf', size: '6.0 MB', sample: 'TEACHERS GUIDE - G.C.E. A/L PHYSICS\nLearning outcomes, practical objectives, and assessment criteria.' }
+        ]
+      },
+      {
+        id: 'syllabus',
+        group: 'Guides',
+        title: 'Syllabus',
+        icon: 'bx-list-check',
+        desc: 'Official A/L Physics syllabus units and subtopics.',
+        items: [
+          { name: 'G.C.E. A/L Physics Official Syllabus.pdf', size: '1.7 MB', sample: 'A/L PHYSICS SYLLABUS OVERVIEW\nUnit 01 Measurement to Unit 11 Matter & Radiation.' }
+        ]
+      },
+      {
+        id: 'elaboration',
+        group: 'Guides',
+        title: 'Elaboration',
+        icon: 'bx-detail',
+        desc: 'Syllabus elaboration documents defining depth and scope of each topic.',
+        items: [
+          { name: 'A/L Physics Syllabus Elaboration Document.pdf', size: '2.3 MB', sample: 'SYLLABUS ELABORATION - DEPTH & BOUNDARIES\nClarifies required mathematical rigor and exam scope.' }
+        ]
+      },
+      {
+        id: 'sinhala-tamil-translated',
+        group: 'Translated',
+        title: 'Sinhala Medium Tamil Translated Papers',
+        icon: 'bx-transfer',
+        desc: 'Sinhala medium papers translated into Tamil for multi-medium reference.',
+        items: [
+          { name: 'Sinhala-to-Tamil Translated Term Paper Set.pdf', size: '2.9 MB', sample: 'TRANSLATED PAPER SET (SINHALA -> TAMIL)\nSide-by-side terminology and translated exam questions.' }
+        ]
+      },
+      {
+        id: 'shakeef-physics-paper',
+        group: 'Shakeef Special',
+        title: 'Shakeef Physics Paper',
+        icon: 'bx-atom',
+        desc: 'Exclusive papers, weekly tests, and marking schemes by Shakeef Physics.',
+        items: [
+          { name: 'Shakeef Physics Weekly Test 01 + Marking.pdf', size: '2.0 MB', sample: 'SHAKEEF PHYSICS ACADEMY - WEEKLY TEST 01\nPrepared with exam-style MCQs and structured questions.' }
+        ]
+      },
+      {
+        id: '2000-plus-books',
+        group: 'Books',
+        title: '2000+ Books',
+        icon: 'bx-library',
+        desc: 'Large library collection of reference books, workbooks, and problem banks.',
+        items: [
+          { name: '2000+ Reference Books Index & Sample Book.pdf', size: '4.4 MB', sample: '2000+ BOOKS ARCHIVE\nCurated Physics reference books, numerical banks, and guides.' }
+        ]
+      },
+      {
+        id: 'jeyakumar-books',
+        group: 'Books',
+        title: 'Jeyakumar Theory and Books',
+        icon: 'bx-book-reader',
+        desc: 'Jeyakumar Physics theory materials and reference books.',
+        items: [
+          { name: 'Jeyakumar Physics Theory & Problem Guide.pdf', size: '5.5 MB', sample: 'JEYAKUMAR THEORY & BOOKS COLLECTION\nConcept explanations and worked examples.' }
+        ]
+      },
+      {
+        id: 'other-papers',
+        group: 'More',
+        title: 'Other Papers',
+        icon: 'bx-folder-open',
+        desc: 'Additional institute papers, seminar papers, and miscellaneous PDFs.',
+        items: [
+          { name: 'Special Seminar & Revision Paper Pack.pdf', size: '2.2 MB', sample: 'OTHER PAPERS & SEMINAR ARCHIVE\nExtra practice sets uploaded by admin.' }
+        ]
+      }
+    ];
+
+    let activeGroup = 'ALL';
+    let currentSet = null;
+
+    // Theme
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const savedTheme = localStorage.getItem('sp_theme') || 'light';
+    setTheme(savedTheme);
+    themeBtn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('sp_theme', t);
+      themeIcon.className = t === 'dark' ? 'bx bx-sun' : 'bx bx-moon';
+    }
+
+    // Category Filter Pills
+    function renderCategoryPills() {
+      const groups = ['ALL', ...new Set(paperCategories.map(c => c.group))];
+      document.getElementById('catBar').innerHTML = groups.map(g => `
+        <button class="cat-pill ${activeGroup === g ? 'active' : ''}" onclick="selectGroup('${g}')">${g === 'ALL' ? 'All Categories' : g}</button>
+      `).join('');
+    }
+
+    function selectGroup(g) {
+      activeGroup = g;
+      renderCategoryPills();
+      renderCards();
+    }
+
+    // Render Category Cards + Search Match
+    function renderCards() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = paperCategories.filter(cat => {
+        const groupMatch = activeGroup === 'ALL' || cat.group === activeGroup;
+        const textMatch = !q ||
+          cat.title.toLowerCase().includes(q) ||
+          cat.desc.toLowerCase().includes(q) ||
+          cat.items.some(i => i.name.toLowerCase().includes(q));
+        return groupMatch && textMatch;
+      });
+
+      document.getElementById('cardsGrid').innerHTML = filtered.map(cat => `
+        <div class="paper-cat-card" onclick="openSetDrawer('${cat.id}')">
+          <div class="card-top">
+            <div class="cat-icon"><i class='bx ${cat.icon}'></i></div>
+            <span class="count-tag">${cat.items.length} PDFs</span>
+          </div>
+          <h3>${cat.title}</h3>
+          <p>${cat.desc}</p>
+          <button class="btn btn-primary btn-full">Open Paper Set <i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+      `).join('');
+    }
+
+    // Open Paper Set View
+    function openSetDrawer(catId) {
+      currentSet = paperCategories.find(c => c.id === catId);
+      document.getElementById('mainCatalog').style.display = 'none';
+      document.getElementById('setDrawer').classList.add('active');
+      document.getElementById('drawerGroupLabel').textContent = currentSet.group.toUpperCase();
+      document.getElementById('drawerTitle').textContent = currentSet.title;
+      document.getElementById('drawerDesc').textContent = currentSet.desc;
+
+      document.getElementById('drawerPdfList').innerHTML = currentSet.items.map((pdf, idx) => `
+        <div class="pdf-item-card">
+          <div class="pdf-meta">
+            <i class='bx bxs-file-pdf'></i>
+            <div>
+              <strong>${pdf.name}</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted);">${pdf.size} • Ready to Preview & Download</div>
+            </div>
+          </div>
+          <div class="pdf-actions">
+            <button class="btn btn-outline btn-sm" onclick="openPreview(${idx})"><i class='bx bx-show'></i> Preview</button>
+            <button class="btn btn-primary btn-sm" onclick="downloadFile(${idx})"><i class='bx bx-download'></i> Download</button>
+            <button class="btn btn-outline btn-sm" onclick="shareLink(window.location.href, '${pdf.name}')"><i class='bx bx-share-alt'></i> Share</button>
+          </div>
+        </div>
+      `).join('');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeSetDrawer() {
+      currentSet = null;
+      document.getElementById('setDrawer').classList.remove('active');
+      document.getElementById('mainCatalog').style.display = 'block';
+    }
+
+    // Preview & Download PDF
+    function openPreview(idx) {
+      const pdf = currentSet.items[idx];
+      document.getElementById('previewTitle').textContent = pdf.name;
+      document.getElementById('previewSheet').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; line-height:1.7;">${pdf.sample}</pre>`;
+      document.getElementById('previewDownloadBtn').onclick = () => downloadFile(idx);
+      document.getElementById('previewShareBtn').onclick = () => shareLink(window.location.href, pdf.name);
+      document.getElementById('previewModal').classList.add('open');
+    }
+
+    function closePreviewModal() {
+      document.getElementById('previewModal').classList.remove('open');
+    }
+
+    function downloadFile(idx) {
+      const pdf = currentSet.items[idx];
+      const blob = new Blob([pdf.sample], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = pdf.name;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Downloading ' + pdf.name);
+    }
+
+    // Share Link
+    function shareLink(url, title) {
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+        showToast('Link copied: ' + title);
+      }
+    }
+
+    // Request Paper Modal
+    function openRequestModal() {
+      document.getElementById('requestModal').classList.add('open');
+    }
+    function closeRequestModal() {
+      document.getElementById('requestModal').classList.remove('open');
+    }
+    function submitRequest(e) {
+      e.preventDefault();
+      const name = document.getElementById('reqName').value.trim();
+      const cat = document.getElementById('reqCategory').value;
+      closeRequestModal();
+      e.target.reset();
+      showToast(`Request sent for "${name}" (${cat})`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastBox');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2600);
+    }
+
+    renderCategoryPills();
+    renderCards();
+  </script>
+</body>
+</html>
